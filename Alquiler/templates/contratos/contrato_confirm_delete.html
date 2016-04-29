@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Borrar Contrato</h1>
+	<form method="post">
+		{% csrf_token %}
+		¿Estas segurode borrar el contrato "{{ object }}"
+		<input type="submit" value="Enviar">
+	</form>
+	<p>
+		<a href="{% url "contratos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

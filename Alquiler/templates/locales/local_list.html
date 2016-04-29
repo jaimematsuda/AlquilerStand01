@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Lista de Locales</h1>
+	<p>
+		<a href="{% url "locales:new" %}">Agregar Local</a>
+	</p>
+
+	<table>
+		<tr>
+			<th>PISO</th>
+			<th>TIPO</th>
+			<th>NUMERO</th>
+			<th>DIVISION</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		{% for local in object_list %}
+		<tr>
+			<td>{{ local.piso }}</td>
+			<td>{{ local.tipo }}</td>
+			<td>{{ local.numero }}</td>
+			<td>{{ local.division }}</td>
+			<td><a href="{% url "locales:detail" local.id %}">Ver</a></td>
+			<td><a href="{% url "locales:edit" local.id %}">Editar</a></td>
+			<td><a href="{% url "locales:delete" local.id %}">Borrar</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
+
+

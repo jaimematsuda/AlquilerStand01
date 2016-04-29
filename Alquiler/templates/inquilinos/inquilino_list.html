@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Lista de Inquilinos</h1>
+	<p>
+		<a href="{% url "inquilinos:new" %}">Agregar Inquilino</a>
+	</p>
+
+	<table>
+		<tr>
+			<th>NOMBRE</th>
+			<th>RUC</th>
+			<th>DNI</th>
+			<th>TELEFONO</th>
+			<th>DIRECCION</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		{% for inquilino in object_list %}
+		<tr>
+			<td>{{ inquilino.nombre }}</td>
+			<td>{{ inquilino.ruc }}</td>
+			<td>{{ inquilino.dni }}</td>
+			<td>{{ inquilino.telefono }}</td>
+			<td>{{ inquilino.direccion }}</td>
+			<td><a href="{% url "inquilinos:detail" inquilino.id %}">Ver</a></td>
+			<td><a href="{% url "inquilinos:edit" inquilino.id %}">Editar</a></td>
+			<td><a href="{% url "inquilinos:delete" inquilino.id %}">Borrar</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
+
+

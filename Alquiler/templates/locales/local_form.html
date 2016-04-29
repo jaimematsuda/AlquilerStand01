@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Locales</h1>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Enviar" />
+	</form>
+	<p>
+		<a href="{% url "locales:list" %}">Regresar</a>
+	</p>
+{% endblock %}

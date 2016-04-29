@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block page_title %}{% endblock %}</title>
+</head>
+<body>
+	<header>
+		<div>
+			<h1>
+				<a href="">Administracion</a>
+			</h1>
+		</div>
+		<div>
+			Bienvenido,
+			<strong>Miguel Angel</strong>
+			. /
+			<a href="">Cerrar Sesion</a>
+		</div>
+	</header>
+	<nav>
+		
+	</nav>
+	<article>
+		<section>
+			{% block contenido %}
+			{% endblock %}
+		</section>
+	</article>
+	<footer>
+		<p>Pie</p>
+	</footer>
+	
+</body>
+</html>

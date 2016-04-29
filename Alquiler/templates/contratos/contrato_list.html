@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Lista de Contratos</h1>
+	<p>
+		<a href="{% url "contratos:new" %}">Agregar Contrato</a>
+	</p>
+
+	<table>
+		<tr>
+			<th>NUMERO</th>
+			<th>LOCAL</th>
+			<th>INQUILINO</th>
+			<th>INICIO CONTRATO</th>
+			<th>VENCIMIENTO C.</th>
+			<th>MONEDA</th>
+			<th>MONTO</th>
+			<th>VIGENCIA</th>
+			<th>COBRO</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		{% for contrato in object_list %}
+		<tr>
+			<td>{{ contrato.id }}</td>
+			<td>{{ contrato.local }}</td>
+			<td>{{ contrato.inquilino }}</td>
+			<td>{{ contrato.inicio }}</td>
+			<td>{{ contrato.vencimiento }}</td>
+			<td>{{ contrato.moneda }}</td>
+			<td>{{ contrato.monto }}</td>
+			<td>{{ contrato.vigencia.nombre }}</td>
+			<td>{{ contrato.cobro.nombre }}</td>
+			<td><a href="{% url "contratos:detail" contrato.id %}">Ver</a></td>
+			<td><a href="{% url "contratos:edit" contrato.id %}">Editar</a></td>
+			<td><a href="{% url "contratos:delete" contrato.id %}">Borrar</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
+
+

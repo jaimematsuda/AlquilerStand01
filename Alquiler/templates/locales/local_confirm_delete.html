@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Borrar local</h1>
+	<form method="post">
+		{% csrf_token %}
+		¿Estas segurode borrar el local "{{ object }}"
+		<input type="submit" value="Enviar">
+	</form>
+	<p>
+		<a href="{% url "locales:list" %}">Regresar</a>
+	</p>
+{% endblock %}

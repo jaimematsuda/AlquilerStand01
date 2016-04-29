@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>
+		Estado de Cuentas
+	</h1>
+	<form method="post">
+    	{% csrf_token %}
+    	<label>Elegir Mes :</label>
+    	<input type="text" name="mes" />
+    	<input type="submit" value="Enviar" />
+	</form>
+
+	<h1>
+		Mes de Abril
+	</h1>
+	<table>
+		<tr>
+			<td>PISO</td>
+			<td>LOCAL</td>
+			<td>PERIODO</td>
+			<td>M. ALQUILER</td>
+			<td>MONTO</td>
+			<td>ESTADO MES</td>
+			<td>COLORES</td>
+		</tr>
+		{% for cr in contrato %}
+			<tr>
+	  				<td>{{ cr.local.piso }}</td>
+	    			<td>{{ cr.id }}</td>
+	    			<td>nuevo</td>
+	    			<td>{{ cr.monto }}</td>
+	    			<td></td>
+					<td>Nuevo</td>
+	    			<td>color</td>
+			</tr>
+		{% endfor %}
+  		{% for pr in object_list %}
+  			<tr>
+  				<td>{{ pr.contrato__local__piso }}</td>
+    			<td>{{ pr.contrato__pk }}</td>
+    			<td>{{ pr.periodo }}</td>
+    			<td>{{ pr.contrato__monto }}</td>
+    			<td>{{ pr.monto_cobrado }}</td>
+    			{% if pr.contrato__monto == pr.monto_cobrado %}
+					<td>Cancelado</td>
+				{% elif pr.contrato__monto > pr.monto_cobrado %}
+					<td>A Cuenta</td>
+				{% else %}
+					<td>Revisar</td>
+				{% endif %}
+    			<td>color</td>
+  			</tr>
+  		{% endfor %}		
+	</table>
+	<p> 
+		los locales con contratos nuevos van a aparecer como nuevo mientras no 
+		se ingrese una cobranza en el modulo de cobranza, eso significa que el 
+		cobrador debe ingresar los datos online para que este reporte este 
+		actualizado en tiempo real. Y los nuevos aparecen arriba
+	</p>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Detalle del inquilino</h1>
+	<h1>{{ inquilino.nombre }}</h1>
+	<p>Ruc: <i>{{ inquilino.ruc }}</i></p>
+	<p>Dni: <i>{{ inquilino.dni }}</i></p>
+	<p>Telefono: <i>{{ inquilino.telefono }}</i></p>
+	<p>Direccion: <i>{{ inquilino.direccion }}</i></p>
+	<p>
+		<a href="{% url "inquilinos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

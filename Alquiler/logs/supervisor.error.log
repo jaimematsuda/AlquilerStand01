@@ -1,0 +1,54 @@
+Unknown command: 'run_gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'run_gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'run_gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'run_gunicorn'
+Type 'manage.py help' for usage.
+/home/spart4kus/Proyectos/Alquiler_local/env/bin/python2.7: can't open file '/home/spart4kus/Proyectos/Alquiler_local/Alquiler/gunicorn': [Errno 2] No such file or directory
+/home/spart4kus/Proyectos/Alquiler_local/env/bin/python2.7: can't open file '/home/spart4kus/Proyectos/Alquiler_local/Alquiler/gunicorn': [Errno 2] No such file or directory
+/home/spart4kus/Proyectos/Alquiler_local/env/bin/python2.7: can't open file '/home/spart4kus/Proyectos/Alquiler_local/Alquiler/gunicorn': [Errno 2] No such file or directory
+/home/spart4kus/Proyectos/Alquiler_local/env/bin/python2.7: can't open file '/home/spart4kus/Proyectos/Alquiler_local/Alquiler/gunicorn': [Errno 2] No such file or directory
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+Unknown command: 'gunicorn'
+Type 'manage.py help' for usage.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+usage: gunicorn [OPTIONS] [APP_MODULE]
+gunicorn: error: No application module specified.
+[2016-04-13 13:31:43 +0000] [8314] [INFO] Starting gunicorn 19.4.5
+[2016-04-13 13:31:43 +0000] [8314] [INFO] Listening at: http://127.0.0.1:8080 (8314)
+[2016-04-13 13:31:43 +0000] [8314] [INFO] Using worker: sync
+[2016-04-13 13:31:43 +0000] [8322] [INFO] Booting worker with pid: 8322
+Not Found: /
+Not Found: /static/admin/css/base.css
+Not Found: /static/admin/css/dashboard.css
+[2016-04-13 13:38:22 +0000] [8314] [INFO] Handling signal: term
+[2016-04-13 18:38:22 +0000] [8322] [INFO] Worker exiting (pid: 8322)
+[2016-04-13 13:38:22 +0000] [8314] [INFO] Shutting down: Master
