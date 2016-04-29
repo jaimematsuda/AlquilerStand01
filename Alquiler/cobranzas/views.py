@@ -73,7 +73,7 @@ class EstadoCuentaList(ListView):
 									   'contrato__local',
 								       'periodo', 'contrato__monto', 
 								       'contrato__pk'
-								      ).filter(periodo='04/2016'
+								      ).filter(periodo='04-2016'
 								      ).annotate(monto_cobrado=Sum('monto'))
 
 	def get_context_data(self, **kwargs):

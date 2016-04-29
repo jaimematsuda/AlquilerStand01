@@ -1,13 +1,16 @@
 from django import forms
 
-from .models import Cobranza
+from .models import Cobranza, Contrato
 
 # Traer de la tabla Contratos los contratos filtrados
 # por cobro igual a Debe
 class CobranzaForm(forms.ModelForm):
-	class Meta:
+	def __init__(self, *args, **kwargs):
+		super(CobranzaForm, self).__init__(*args, **kwargs)
+		self.fields['contrato'].queryset = Contrato.objects.filter(cobro=1)
+	class Meta():
 		model = Cobranza
-		queryset = Cobranza.objects.get(contrato_id=1)
 		fields = ['contrato', 'periodo', 'fecha_cobranza', 'monto', 'lote']
+
 
 
