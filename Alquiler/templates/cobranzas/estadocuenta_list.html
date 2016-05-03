@@ -10,11 +10,12 @@
 	</h1>
 	<form method="post">
     	{% csrf_token %}
-    	<label>Elegir Mes :</label>
+    	<label>Año :</label>
+    	<input type="text" name="anio" />
+    	<label>Mes :</label>
     	<input type="text" name="mes" />
     	<input type="submit" value="Enviar" />
 	</form>
-
 	<h1>
 		Mes de Abril
 	</h1>

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'locales.apps.LocalesConfig',
     'inquilinos.apps.InquilinosConfig',
     'contratos.apps.ContratosConfig',
-    'cobranzas.apps.CobranzasConfig'
+    'cobranzas.apps.CobranzasConfig',
+    'mantenimientos.apps.MantenimientosConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

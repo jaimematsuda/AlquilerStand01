@@ -16,6 +16,7 @@ class CobranzaLote(models.Model):
 
 
 class Cobranza(models.Model):
+	#tipo = models.ForenignKey(TipoCobranza) ## ALQUILER, MANTENIMIENTO
 	contrato = models.ForeignKey(Contrato)
 	periodo = models.CharField(max_length=255)
 	fecha_cobranza = models.DateField()
