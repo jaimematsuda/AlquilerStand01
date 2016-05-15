@@ -27,7 +27,7 @@ class Mantenimiento(models.Model):
 	grupo = models.ForeignKey(MantenimientoGrupo)
 	nombre = models.ForeignKey(MantenimientoNombre)
 	periodo = models.CharField(max_length=255)
-	monto = models.DecimalField(max_digits=7, decimal_places=2)
+	total = models.DecimalField(max_digits=7, decimal_places=2)
 
 	class Meta:
 		ordering =('periodo', 'grupo', 'nombre',)

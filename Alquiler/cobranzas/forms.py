@@ -10,7 +10,7 @@ class CobranzaForm(forms.ModelForm):
 		self.fields['contrato'].queryset = Contrato.objects.filter(cobro=1)
 	class Meta():
 		model = Cobranza
-		fields = ['contrato', 'periodo', 'fecha_cobranza', 'monto', 'lote']
+		fields = ['contrato', 'periodo', 'fecha', 'monto']
 
 
 

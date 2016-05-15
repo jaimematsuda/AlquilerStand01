@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import MantenimientoGrupo, MantenimientoNombre, Mantenimiento
 
-# Register your models here.
+
 @admin.register(MantenimientoGrupo)
 class AdminMantenimientoGrupo(admin.ModelAdmin):
 	list_display = ('nombre',)
@@ -15,5 +15,5 @@ class AdminMantenimientoNombre(admin.ModelAdmin):
 
 @admin.register(Mantenimiento)
 class AdminMantenimiento(admin.ModelAdmin):
-	list_display = ('grupo', 'nombre', 'periodo', 'monto',)
+	list_display = ('grupo', 'nombre', 'periodo', 'total',)
 	list_filter = ('grupo', 'nombre', 'periodo',)

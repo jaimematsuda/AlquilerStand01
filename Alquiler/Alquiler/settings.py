@@ -38,11 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gunicorn',
-    'locales.apps.LocalesConfig',
-    'inquilinos.apps.InquilinosConfig',
-    'contratos.apps.ContratosConfig',
+    'bancos.apps.BancosConfig',
+    'cajas.apps.CajasConfig',
     'cobranzas.apps.CobranzasConfig',
+    'contratos.apps.ContratosConfig',
+    'gastos.apps.GastosConfig',
+    'inquilinos.apps.InquilinosConfig',
+    'locales.apps.LocalesConfig',
+    'lotes.apps.LotesConfig',
     'mantenimientos.apps.MantenimientosConfig',
+    'pagos.apps.PagosConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
