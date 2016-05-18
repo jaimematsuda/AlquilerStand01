@@ -30,3 +30,6 @@ class Gasto(models.Model):
 
 	class Meta:
 		ordering =('nombre',)
+
+	def __str__(self):
+		return '%s %s' % (self.grupo, self.nombre)

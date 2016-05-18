@@ -31,3 +31,6 @@ class Mantenimiento(models.Model):
 
 	class Meta:
 		ordering =('periodo', 'grupo', 'nombre',)
+
+	def __str__(self):
+		return '%s %s' % (self.grupo, self.nombre)

@@ -52,14 +52,5 @@ class ContratoUpdate(UpdateView):
 		return context
 
 
-class ContratoDelete(DeleteView):
-	model = Contrato
-	success_url = reverse_lazy('contratos:list')
-
-	def get_context_data(self, **kwargs):
-		context = super(ContratoDelete, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Borrar Contrato'})
-		return context
-
 
 

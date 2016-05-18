@@ -12,8 +12,8 @@ class Pago(models.Model):
 	class Meta:
 		ordering = ('fecha',)
 
-	def __str__(self):
-		return 	self.fecha
+	def __unicode__(self):
+		return u'%s' % (self.fecha)
 
 
 class PagoMantenimiento(models.Model):
@@ -21,12 +21,16 @@ class PagoMantenimiento(models.Model):
 	mantenimiento = models.ForeignKey(Mantenimiento)
 	monto = models.DecimalField(max_digits=7, decimal_places=2)
 
+	def __str__(self):
+		return '%s %s' % (self.pago, self.mantenimiento)
+
 
 class PagoGasto(models.Model):
 	pago = models.OneToOneField(Pago, primary_key=True)
 	gasto = models.ForeignKey(Gasto)
 	monto = models.DecimalField(max_digits=7, decimal_places=2)
 
-
+	def __str__(self):
+		return '%s %s' % (self.pago, self.gasto)
 
 

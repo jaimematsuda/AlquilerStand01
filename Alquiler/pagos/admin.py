@@ -5,7 +5,7 @@ from .models import Pago, PagoGasto, PagoMantenimiento
 
 @admin.register(Pago)
 class AdminPago(admin.ModelAdmin):
-	list_display = ('fecha',)
+	list_display = ('id', 'fecha',)
 
 
 @admin.register(PagoMantenimiento)
