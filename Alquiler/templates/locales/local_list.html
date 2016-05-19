@@ -18,7 +18,6 @@
 			<th>DIVISION</th>
 			<th></th>
 			<th></th>
-			<th></th>
 		</tr>
 
 		{% for local in object_list %}
@@ -29,7 +28,6 @@
 			<td>{{ local.division }}</td>
 			<td><a href="{% url "locales:detail" local.id %}">Ver</a></td>
 			<td><a href="{% url "locales:edit" local.id %}">Editar</a></td>
-			<td><a href="{% url "locales:delete" local.id %}">Borrar</a></td>
 		</tr>
 		{% endfor %}
 	</table>

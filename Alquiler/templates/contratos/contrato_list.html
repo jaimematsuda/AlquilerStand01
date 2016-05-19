@@ -9,7 +9,6 @@
 	<p>
 		<a href="{% url "contratos:new" %}">Agregar Contrato</a>
 	</p>
-
 	<table>
 		<tr>
 			<th>NUMERO</th>
@@ -23,9 +22,7 @@
 			<th>COBRO</th>
 			<th></th>
 			<th></th>
-			<th></th>
 		</tr>
-
 		{% for contrato in object_list %}
 		<tr>
 			<td>{{ contrato.id }}</td>
@@ -39,7 +36,6 @@
 			<td>{{ contrato.cobro.nombre }}</td>
 			<td><a href="{% url "contratos:detail" contrato.id %}">Ver</a></td>
 			<td><a href="{% url "contratos:edit" contrato.id %}">Editar</a></td>
-			<td><a href="{% url "contratos:delete" contrato.id %}">Borrar</a></td>
 		</tr>
 		{% endfor %}
 	</table>

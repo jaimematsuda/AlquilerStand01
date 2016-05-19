@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block contenido %}
-
-<h1>{{ cobranza.contrato }}</h1>
-<p>Periodo: <i>{{ cobranza.periodo }}</i></p>
-<p>Fecha de Cobranza: <i>{{ cobranza.fecha_cobranza }}</i></p>
-<p>
-    <a href="{% url "cobranzas:list" %}">Regresar</a>
-</p>
-
+	<h1>Numero: <i>{{ lote.numero }}</i></h1>
+	<p>Inicio: <i>{{ lote.inicio }}</i></p>
+	<p>Cierre: <i>{{ lote.cierre }}</i></p>
+	<p>Cobrado: <i>{{ lote.cobrado }}</i></p>
+	<p>Gasto: <i>{{ lote.gasto }}</i></p>
+	<p>Total: <i>{{ lote.total }}</i></p>
+	<p>Revisado: <i>{{ lote.revisado }}</i></p>
+	<p>
+	    <a href="{% url "lotes:list" %}">Regresar</a>
+	</p>
 {% endblock %}

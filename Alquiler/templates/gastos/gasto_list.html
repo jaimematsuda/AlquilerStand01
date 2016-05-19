@@ -5,37 +5,30 @@
 {% endblock %}
 
 {% block contenido %}
-<h1>
-    Lista de Lotes
-</h1>
-<p>
-    <a href="{% url "lotes:new" %}">Agregar Lote</a>
-</p>
-<table>
-    <tr>
-        <td>NUMERO</td>
-        <td>INICIO</td>
-        <td>COBRADO</td>
-        <td>GASTO</td>
-        <td>TOTAL</td>
-        <td>REVISADO</td>
-        <td></td>
-        <td></td>
-    </tr>
-    {% for lt in object_list %}
+    <h1>
+        Lista de Gastos
+    </h1>
+    <p>
+        <a href="{% url "gastos:new" %}">Agregar Gasto</a>
+    </p>
+    <table>
         <tr>
-            <td>{{ lt.numero }}</td>
-            <td>{{ lt.inicio }}</td>
-            <td>{{ lt.cierr }}</td>
-            <td>{{ lt.cobrado }}</td>
-            <td>{{ lt.gasto }}</td>
-            <td>{{ lt.total }}</td>
-            <td>{{ lt.revisado }}</td>
-            <td><a href="{% url "lotes:detail" lt.id %}">Ver</a></td>
-            <td><a href="{% url "lotes:edit" lt.id %}">Editar</a></td>
+            <td>ID</td>
+            <td>GRUPO</td>
+            <td>NOMBRE</td>
+            <td>TOTAL</td>
+            <td></td>
+            <td></td>
         </tr>
-    {% endfor %}
-    
-</table>
-
+        {% for lt in object_list %}
+            <tr>
+                <td>{{ lt.id }}</td>
+                <td>{{ lt.grupo }}</td>
+                <td>{{ lt.nombre }}</td>
+                <td>{{ lt.total }}</td>
+                <td><a href="{% url "gastos:detail" lt.id %}">Ver</a></td>
+                <td><a href="{% url "gastos:edit" lt.id %}">Editar</a></td>
+            </tr>
+        {% endfor %}       
+    </table>
 {% endblock %}

@@ -5,59 +5,56 @@
 {% endblock %}
 
 {% block contenido %}
-<h1>
-    Lista de Cobranzas
-</h1>
-<p>
-    <a href="{% url "cobranzas:new" %}">Agregar Cobranza</a>
-</p>
-<table>
-    <tr>
-        <td>PISO</td>
-        <td>CONTRATO</td>
-        <td>LOCAL</td>
-        <td>PERIODO</td>
-        <td>FECHA DE COBRANZA</td>
-        <td>MONTO</td>
-        <td>LOTE</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    {% for pr in object_list %}
+    <h1>
+        Lista de Cobranzas
+    </h1>
+    <p>
+        <a href="{% url "cobranzas:new" %}">Agregar Cobranza</a>
+    </p>
+    <table>
         <tr>
-            <td>{{ pr.contrato.local.piso }}</td>
-            <td>{{ pr.contrato.id }}</td>
-            <td>
-                {{ pr.contrato.local.tipo.nombre }}  
-                {{ pr.contrato.local.numero }}, 
-                {{ pr.contrato.local.division.nombre }}
-            </td>
-            <td>{{ pr.periodo }}</td>
-            <td>{{ pr.fecha_cobranza }}</td>
-            <td>{{ pr.monto }}</td>
-            <td>{{ pr.lote }}</td>
-            <td><a href="{% url "cobranzas:detail" pr.id %}">Ver</a></td>
-            <td><a href="{% url "cobranzas:edit" pr.id %}">Editar</a></td>
-            <td><a href="{% url "cobranzas:delete" pr.id %}">Borrar</a></td>
-
+            <td>TIPO</td>
+            <td>PISO</td>
+            <td>CONTRATO</td>
+            <td>LOCAL</td>
+            <td>PERIODO</td>
+            <td>FECHA DE COBRANZA</td>
+            <td>MONTO</td>
+            <td>LOTE</td>
+            <td></td>
+            <td></td>
         </tr>
-    {% endfor %}
-    <tr></tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>TOTAL COBRADO</td>
-        <td></td>
-        <td>suma total</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr></tr>
-    
-</table>
-
+        {% for pr in object_list %}
+            <tr>
+                <td>{{ pr.contrato.tipo }}</td>
+                <td>{{ pr.contrato.local.piso }}</td>
+                <td>{{ pr.contrato.id }}</td>
+                <td>
+                    {{ pr.contrato.local.tipo.nombre }}  
+                    {{ pr.contrato.local.numero }}, 
+                    {{ pr.contrato.local.division.nombre }}
+                </td>
+                <td>{{ pr.periodo }}</td>
+                <td>{{ pr.fecha_cobranza }}</td>
+                <td>{{ pr.monto }}</td>
+                <td>{{ pr.lote }}</td>
+                <td><a href="{% url "cobranzas:detail" pr.id %}">Ver</a></td>
+                <td><a href="{% url "cobranzas:edit" pr.id %}">Editar</a></td>
+            </tr>
+        {% endfor %}
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>TOTAL COBRADO</td>
+            <td></td>
+            <td>suma total</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr></tr>
+    </table>
 {% endblock %}

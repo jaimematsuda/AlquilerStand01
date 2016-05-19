@@ -49,12 +49,3 @@ class InquilinoUpdate(UpdateView):
 		context.update({'titulo': 'Editar Inquilino'})
 		return context
 
-
-class InquilinoDelete(DeleteView):
-	model = Inquilino
-	success_url = reverse_lazy('inquilinos:list')
-
-	def get_context_data(self, **kwargs):
-		context = super(InquilinoDelete, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Borrar Inquilino'})
-		return context

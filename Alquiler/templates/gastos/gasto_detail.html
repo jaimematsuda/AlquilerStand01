@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block contenido %}
-
-<h1>{{ cobranza.contrato }}</h1>
-<p>Periodo: <i>{{ cobranza.periodo }}</i></p>
-<p>Fecha de Cobranza: <i>{{ cobranza.fecha_cobranza }}</i></p>
-<p>
-    <a href="{% url "cobranzas:list" %}">Regresar</a>
-</p>
-
+	<h1>Gasto <i>{{ gasto.id }}</i></h1>
+	<p>Grupo: <i>{{ gasto.grupo }}</i></p>
+	<p>Nombre: <i>{{ gasto.nombre }}</i></p>
+	<p>Total: <i>{{ gasto.total }}</i></p>
+	<p>
+	    <a href="{% url "gastos:list" %}">Regresar</a>
+	</p>
 {% endblock %}

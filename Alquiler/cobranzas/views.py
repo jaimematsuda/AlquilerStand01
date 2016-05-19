@@ -47,22 +47,12 @@ class CobranzaCreation(CreateView):
 class CobranzaUpdate(UpdateView):
 	model = Cobranza
 	success_url = reverse_lazy('cobranzas:list')
-	fields = ['contrato', 'periodo', 'fecha_cobranza', 'monto', 'lote']	
+	fields = ['tipo', 'contrato', 'periodo', 'fecha', 'monto']	
 
 	def get_context_data(self, **kwargs):
 		context = super(CobranzaUpdate, self).get_context_data(**kwargs)
 		context.update({'titulo': 'Editar Cobranza'})
 		return context
-
-
-class CobranzaDelete(DeleteView):
-	model = Cobranza
-	success_url = reverse_lazy('cobranzas:list')
-
-	def get_context_data(self, **kwargs):
-		context = super(CobranzaDelete, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Borrar Cobranza'})
-		return context	
 
 
 class EstadoCuentaList(ListView):

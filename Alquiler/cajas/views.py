@@ -30,7 +30,7 @@ class CajaDetail(DetailView):
 
 class CajaCreation(CreateView):
 	model = Caja
-	success_url = reverse_lazy('contratos:list')
+	success_url = reverse_lazy('cajas:list')
 	fields = ['id', 'fecha'] 
 
 	def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class CajaCreation(CreateView):
 
 class CajaUpdate(UpdateView):
 	model = Caja
-	success_url = reverse_lazy('contratos:list')
+	success_url = reverse_lazy('cajas:list')
 	fields = ['id', 'fecha'] 
 
 	def get_context_data(self, **kwargs):

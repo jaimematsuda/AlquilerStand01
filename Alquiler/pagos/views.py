@@ -30,7 +30,7 @@ class PagoDetail(DetailView):
 
 class PagoCreation(CreateView):
 	model = Pago
-	success_url = reverse_lazy('contratos:list')
+	success_url = reverse_lazy('pagos:list')
 	fields = ['id', 'fecha'] 
 
 	def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class PagoCreation(CreateView):
 
 class PagoUpdate(UpdateView):
 	model = Pago
-	success_url = reverse_lazy('contratos:list')
+	success_url = reverse_lazy('pagos:list')
 	fields = ['id', 'fecha'] 
 
 	def get_context_data(self, **kwargs):

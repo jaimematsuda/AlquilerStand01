@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block contenido %}
-
-<h1>{{ cobranza.contrato }}</h1>
-<p>Periodo: <i>{{ cobranza.periodo }}</i></p>
-<p>Fecha de Cobranza: <i>{{ cobranza.fecha_cobranza }}</i></p>
-<p>
-    <a href="{% url "cobranzas:list" %}">Regresar</a>
-</p>
-
+	<h1>Mantenimiento <i>{{ mantenimiento.id }}</i></h1>
+	<p>Grupo: <i>{{ mantenimiento.grupo }}</i></p>
+	<p>Nombre: <i>{{ mantenimiento.nombre }}</i></p>
+	<p>Periodo: <i>{{ mantenimiento.periodo }}</i></p>
+	<p>Total: <i>{{ mantenimiento.total }}</i></p>
+	<p>
+	    <a href="{% url "mantenimientos:list" %}">Regresar</a>
+	</p>
 {% endblock %}
