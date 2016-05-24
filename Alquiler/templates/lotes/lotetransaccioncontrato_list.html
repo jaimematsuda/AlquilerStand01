@@ -6,38 +6,46 @@
 
 {% block contenido %}
 	<h1>CONTRATO DE ALQUILERES</h1>
-	<h1>LOTE: <i>{{ s }}</i></h1>
-	<h1>PERIODO: <i>{{ s }}</i></h1>
+	<h1>LOTE: <i>{{ ultimo_lote }}</i></h1>
 	<h1>Cobranzas</h1>
 	<p>
-        <a href="{% url "cobranzas:new" %}">Agregar Cobranza</a>
+        <a href="{% url "lotes:new_cobranza" %}">Agregar Cobranza</a>
     </p>
 	<table>
 		<tr>
 			<td>PISO</td>
+			<td>CONTRATO</td>
 			<td>LOCAL</td>
 			<td>PERIODO</td>
-			<td>M. ALQUILER</td>
+			<td>F. COBRANZA</td>
 			<td>MONTO</td>
-			<td>ESTADO MES</td>
-			<td>COLORES</td>
 		</tr>
-		{% for cr in contrato %}
+		{% for lt in lote_cobranza %}
 			<tr>
-	  				<td>{{ cr.local.piso }}</td>
-	    			<td>{{ cr.id }}</td>
-	    			<td>nuevo</td>
-	    			<td>{{ cr.monto }}</td>
-	    			<td></td>
-					<td>Nuevo</td>
-	    			<td>color</td>
+	  				<td>{{ lt.cobranza.contrato.local.piso }}</td>
+	    			<td>{{ lt.cobranza.contrato.id }}</td>
+	    			<td>{{ lt.cobranza.contrato.local }}</td>
+	    			<td>{{ lt.cobranza.periodo }}</td>
+	    			<td>{{ lt.cobranza.fecha }}</td>
+	    			<td>{{ lt.cobranza.monto }}</td>
 			</tr>
 		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td>{{ cobranza_total }}</td>
+			{% for lt in cobranza_total %}
+				<td>{{ lt.total }}</td>
+			{% endfor %}
+		</tr>
 	</table>
 	<h1>Pagos</h1>
-  		{% for pr in object_list %}
+  		{% for pr in lote_cobranza %}
   			<tr>
-  				<td>{{ pr.contrato__local__piso }}</td>
+  				<td>{{ pr.id }}</td>
     			<td>{{ pr.contrato__pk }}</td>
     			<td>{{ pr.periodo }}</td>
     			<td>{{ pr.contrato__monto }}</td>

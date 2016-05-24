@@ -27,7 +27,7 @@ class Cobranza(models.Model):
 		ordering = ('tipo',)
 	
 	def __str__(self):
-		return 	'%s %s' % (self.contrato.local.tipo.nombre, 
+		return 	'%s %s %s' % (self.id, self.contrato.local.tipo.nombre, 
 			self.contrato.local.numero)
 
 

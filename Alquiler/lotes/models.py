@@ -9,20 +9,37 @@ from pagos.models import Pago
 class Lote(models.Model):
 	numero = models.CharField(max_length=255, unique=True)
 	inicio = models.DateField()
-	cierre = models.DateField(blank=True, null=True)
-	cobrado = models.DecimalField(max_digits=7, decimal_places=2, blank=True,
-							   null=True)
-	gasto = models.DecimalField(max_digits=7, decimal_places=2, blank=True,
-								null=True)
-	total = models.DecimalField(max_digits=7, decimal_places=2, blank=True,
-								null=True)
-	revisado = models.DateField(blank=True, null=True)
 
 	class Meta:
 		ordering = ('numero',)
 
 	def __str__(self):
 		return self.numero
+
+
+class LoteCierre(models.Model):
+	lote = models.OneToOneField(Lote, primary_key=True)
+	fecha = models.DateField()
+	cobrado = models.DecimalField(max_digits=7, decimal_places=2)
+	gasto = models.DecimalField(max_digits=7, decimal_places=2)
+	total = models.DecimalField(max_digits=7, decimal_places=2)
+
+	class Meta:
+		ordering = ('lote',)
+
+	def __str__(self):
+		return u'%s' % (self.fecha)
+
+
+class LoteRevisado(models.Model):
+	lote = models.OneToOneField(Lote, primary_key=True)
+	fecha = models.DateField()
+
+	class Meta:
+		ordering = ('lote',)
+
+	def __str__(self):
+		return u'%s' % (self.fecha)
 
 
 class LoteCobranza(models.Model):

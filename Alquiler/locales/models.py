@@ -30,7 +30,7 @@ class Local(models.Model):
 	division = models.ForeignKey(LocalDivision, default=1)
 
 	def __str__(self):
-		return '%s %s %s %s' % (self.piso, self.tipo, self.numero, self.division)
+		return '%s %s %s' % (self.tipo, self.numero, self.division)
 
 	class Meta:
 		ordering = ('piso', 'tipo', 'numero', 'division',)
