@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% load staticfiles %}
 	<meta charset="UTF-8">
 	<title>{% block page_title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+	<script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+	<!--
+	<script type="text/javascript">
+		$(function(){
+			$("#datepicker").datepicker({dateFormat: 'dd/mm/yy'});
+		})
+	</script> -->
 </head>
 <body>
 	<header>
@@ -30,6 +43,5 @@
 	<footer>
 		<p>Pie</p>
 	</footer>
-	
 </body>
 </html>

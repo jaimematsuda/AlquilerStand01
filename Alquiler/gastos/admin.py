@@ -15,6 +15,6 @@ class AdminGastoNombre(admin.ModelAdmin):
 
 @admin.register(Gasto)
 class AdminGasto(admin.ModelAdmin):
-	list_display = ('grupo', 'nombre', 'total',)
+	list_display = ('grupo', 'nombre',)
 
 

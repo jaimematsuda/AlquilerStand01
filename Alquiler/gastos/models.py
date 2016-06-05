@@ -26,7 +26,6 @@ class GastoNombre(models.Model):
 class Gasto(models.Model):
 	grupo = models.ForeignKey(GastoGrupo)
 	nombre = models.ForeignKey(GastoNombre)
-	total = models.DecimalField(max_digits=7, decimal_places=2)
 
 	class Meta:
 		ordering =('nombre',)

@@ -31,7 +31,7 @@ class MantenimientoDetail(DetailView):
 class MantenimientoCreation(CreateView):
 	model = Mantenimiento
 	success_url = reverse_lazy('mantenimientos:list')
-	fields = ['id', 'grupo', 'nombre', 'periodo', 'total'] 
+	fields = ['id', 'grupo', 'nombre'] 
 
 	def get_context_data(self, **kwargs):
 		context = super(MantenimientoCreation, self).get_context_data(**kwargs)
@@ -42,7 +42,7 @@ class MantenimientoCreation(CreateView):
 class MantenimientoUpdate(UpdateView):
 	model = Mantenimiento
 	success_url = reverse_lazy('mantenimientos:list')
-	fields = ['id', 'grupo', 'nombre', 'periodo', 'total'] 
+	fields = ['id', 'grupo', 'nombre'] 
 
 	def get_context_data(self, **kwargs):
 		context = super(MantenimientoUpdate, self).get_context_data(**kwargs)

@@ -6,8 +6,19 @@ from gastos.models import Gasto
 from mantenimientos.models import Mantenimiento 
 
 
+class PagoTipo(models.Model):
+	nombre = models.CharField(max_length=255)
+
+	class Meta:
+		ordering = ('id',)
+
+	def __str__(self):
+		return self.nombre
+
+
 class Pago(models.Model):
 	fecha = models.DateField()
+	tipo = models.ForeignKey(PagoTipo)
 	
 	class Meta:
 		ordering = ('fecha',)

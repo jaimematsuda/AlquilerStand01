@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import MantenimientoGrupo, MantenimientoNombre, Mantenimiento
+from .models import (MantenimientoGrupo, MantenimientoNombre, Mantenimiento, 
+					MantenimientoPeriodo)
 
 
 @admin.register(MantenimientoGrupo)
@@ -15,5 +16,11 @@ class AdminMantenimientoNombre(admin.ModelAdmin):
 
 @admin.register(Mantenimiento)
 class AdminMantenimiento(admin.ModelAdmin):
-	list_display = ('grupo', 'nombre', 'periodo', 'total',)
-	list_filter = ('grupo', 'nombre', 'periodo',)
+	list_display = ('grupo', 'nombre',)
+	list_filter = ('grupo', 'nombre',)
+
+
+@admin.register(MantenimientoPeriodo)
+class AdminMantenimientoPeriodo(admin.ModelAdmin):
+	list_display = ('mantenimiento', 'periodo', 'total',)
+	list_filter = ('periodo',)

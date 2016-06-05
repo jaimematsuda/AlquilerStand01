@@ -58,7 +58,6 @@ class CobranzaUpdate(UpdateView):
 class EstadoCuentaList(ListView):
 	model = Cobranza  
 	template_name = 'cobranzas/estadocuenta_list.html'
-
 	queryset = Cobranza.objects.values('contrato__local__piso', 
 									   'contrato__local',
 								       'periodo', 'contrato__monto', 
@@ -76,10 +75,8 @@ class EstadoCuentaList(ListView):
 			for x in v:
 				lista_id.append(x)
 		contrato = Contrato.objects.filter(pk__in=lista_id)
-
 		context.update({'titulo': 'Estado de Cuenta'})
 		context.update({'contrato': contrato})
 		context.update({'diferencia': diferencia})
 		context.update({'lista_id': lista_id})
-
 		return context

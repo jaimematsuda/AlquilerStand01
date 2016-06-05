@@ -8,7 +8,6 @@ from cobranzas.models import Cobranza, CobranzaTipo
 
 
 class LoteNuevaCobranzaForm(CobranzaForm):
-	#dia = forms.DateField(widget=SelectDateWidget(empty_label="Nothing"))
 	def __init__(self, *args, **kwargs):
 		super(LoteNuevaCobranzaForm, self).__init__(*args, **kwargs)
 		tipo = CobranzaTipo.objects.values('id').filter(nombre='Contrato')
@@ -18,13 +17,10 @@ class LoteNuevaCobranzaForm(CobranzaForm):
 LoteCobranzaFormSet = inlineformset_factory(Cobranza, LoteCobranza, can_delete=False, fields=('lote',))
 
 
-'''
-class CobranzaForm(forms.ModelForm):
-	def __init__(self, *args, **kwargs):
-		super(CobranzaForm, self).__init__(*args, **kwargs)
-		self.fields['contrato'].queryset = Contrato.objects.filter(cobro=1)
-
+class LoteEditarCobranzaForm(forms.ModelForm):
 	class Meta():
 		model = Cobranza
 		fields = ['tipo', 'contrato', 'periodo', 'fecha', 'monto']
-'''
+		widgets = {
+			'fecha': forms.DateInput(attrs={'id': 'datepicker'})
+		}

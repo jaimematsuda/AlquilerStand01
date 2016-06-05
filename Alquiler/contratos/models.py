@@ -45,7 +45,7 @@ class Contrato(models.Model):
 
 	class Meta:
 		ordering = ('local', 'inquilino', 'vencimiento')
-		unique_together = (("local", "inquilino", "inicio"),)	
+		unique_together = ('local' , 'inquilino', 'inicio')	
 	
 	def __str__(self):
 		return '%s %s %s %s' % (self.id, self.local.tipo.nombre, 

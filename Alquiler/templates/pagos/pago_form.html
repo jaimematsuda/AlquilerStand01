@@ -11,6 +11,7 @@
 	    <input type="submit" value="Submit" />
 	</form>
 	<p>
-		<a href="{% url "pagos:list" %}">Regresar</a>
+		<a href="{% url "pagos:list" month year %}">Regresar</a>
 	</p>
+	<p>{{ month }}</p>
 {% endblock %}

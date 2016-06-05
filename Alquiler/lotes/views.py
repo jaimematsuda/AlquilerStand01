@@ -17,7 +17,7 @@ from bancos.models import Banco, BancoLote
 
 from cobranzas.views import CobranzaList
 
-from .forms import LoteNuevaCobranzaForm, LoteCobranzaFormSet 
+from .forms import LoteNuevaCobranzaForm, LoteCobranzaFormSet, LoteEditarCobranzaForm
 
 
 class LoteList(ListView):
@@ -53,8 +53,7 @@ class LoteCreation(CreateView):
 class LoteUpdate(UpdateView):
 	model = Lote
 	success_url = reverse_lazy('lotes:list')
-	fields = ['id', 'numero', 'inicio', 'cierre', 'cobrado', 'gasto', 'total',
-			  'revisado'] 
+	fields = ['id', 'numero', 'inicio']
 
 	def get_context_data(self, **kwargs):
 		context = super(LoteUpdate, self).get_context_data(**kwargs)
@@ -62,14 +61,34 @@ class LoteUpdate(UpdateView):
 		return context
 
 
+class LoteCobranzaList(ListView):
+	model = LoteCobranza 
+
+	def get_context_data(self, **kwargs):
+		context = super(LoteCobranzaList, self).get_context_data(**kwargs)
+		context.update({'titulo': 'Lista Lote de Cobranzas'})
+		return context
+
+
 class LoteCobranzaCreation(CreateView):
 	model = LoteCobranza
-	success_url = reverse_lazy('lotes:list')
+	success_url = reverse_lazy('lotes:list_lotecobranza')
 	fields = ['cobranza', 'lote'] 
 
 	def get_context_data(self, **kwargs):
 		context = super(LoteCobranzaCreation, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Nuevo Lote Cobranza'})
+		context.update({'titulo': 'Nuevo Lote de Cobranza'})
+		return context
+
+
+class LoteCobranzaUpdate(UpdateView):
+	model = LoteCobranza 
+	success_url = reverse_lazy('lotes:list_lotecobranza')
+	fields = ['cobranza', 'lote']
+
+	def get_context_data(self, **kwargs):
+		context = super(LoteCobranzaUpdate, self).get_context_data(**kwargs)
+		context.update({'titulo': 'Editar Lote de Cobranza'})
 		return context
 
 
@@ -82,18 +101,17 @@ class LoteTransaccionContratoList(ListView):
 	def get_context_data(self, **kwargs):
 		context = super(LoteTransaccionContratoList, self).get_context_data(
 			**kwargs)
-		lote_cobranza = LoteCobranza.objects.all().filter(
+		lote_cobranza = LoteCobranza.objects.filter(
 			lote=context['ultimo_lote'], cobranza__tipo__id=1)
-		cobranza_total = LoteCobranza.objects.values('cobranza__monto').filter(
-			lote=context['ultimo_lote'], cobranza__tipo__id=1).annotate(
+		cobranza_total = LoteCobranza.objects.filter(
+			lote=context['ultimo_lote'], cobranza__tipo__id=1).aggregate(
 			total=Sum('cobranza__monto'))
-		lote_pago = LotePago.objects.all()
+		#lote_pago = LotePago.objects.all()
 
 		context.update({'titulo': 'Transacciones'})
 		context.update({'lote_cobranza': lote_cobranza})
 		context.update({'cobranza_total': cobranza_total})
-		context.update({'lote_pago': lote_pago})
-
+		#context.update({'lote_pago': lote_pago})
 		return context
 
 
@@ -112,7 +130,6 @@ class LoteNuevaCobranzaCreation(CreateView):
 		form = self.get_form(form_class)
 		ultimo_lote_id = Lote.objects.order_by('id').last()
 		lotecobranza_form = LoteCobranzaFormSet(initial=[{'lote': ultimo_lote_id}])
-
 		return self.render_to_response(self.get_context_data(form=form, lotecobranza_form=lotecobranza_form))
 
 	def post(self, request, *args, **kwargs):
@@ -139,7 +156,6 @@ class LoteNuevaCobranzaCreation(CreateView):
 		self.object = form.save()
 		lotecobranza_form.instance = self.object
 		lotecobranza_form.save()
-
 		return HttpResponseRedirect(self.get_success_url())
 
 	def form_invalid(self, form, lotecobranza_form):
@@ -152,6 +168,56 @@ class LoteNuevaCobranzaCreation(CreateView):
 		                      lotecobranza_form=lotecobranza_form))
 		
 
+class LoteNuevaCobranzaUpdate(UpdateView):
+	model = Cobranza 
+	template_name = 'lotes/loteeditarcobranza_form.html'
+	success_url = reverse_lazy('lotes:transaction')
+	form_class = LoteEditarCobranzaForm
 
+	def get(self, request, *args, **kwargs):
+		"""
+		Handles GET requests and instantiates blank versions of the form
+		and its inline formsets.
+		"""
+		self.object = self.get_object()
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		ultimo_lote_id = Lote.objects.order_by('id').last()
+		lotecobranza_form = LoteCobranzaFormSet(initial=[{'lote': ultimo_lote_id}])
+		return self.render_to_response(self.get_context_data(form=form, lotecobranza_form=lotecobranza_form))
 
+	def post(self, request, *args, **kwargs):
+		"""
+		Handles POST requests, instantiating a form instance and its inline
+		formsets with the passed POST variables and then checking them for
+		validity.
+		"""
+		self.object = self.get_object()
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		lotecobranza_form = LoteCobranzaFormSet(self.request.POST)
+		if (form.is_valid() and lotecobranza_form.is_valid()):
+		    return self.form_valid(form, lotecobranza_form)
+		else:
+		    return self.form_invalid(form, lotecobranza_form)
 
+	def form_valid(self, form, lotecobranza_form):
+		"""
+		Called if all forms are valid. Creates a Recipe instance along with
+		associated Ingredients and Instructions and then redirects to a
+		success page.
+		"""
+		self.object = form.save()
+		lotecobranza_form.instance = self.object
+		lotecobranza_form.save()
+		return HttpResponseRedirect(self.get_success_url())
+
+	def form_invalid(self, form, lotecobranza_form):
+		"""
+		Called if a form is invalid. Re-renders the context data with the
+		data-filled forms and errors.
+		"""
+		return self.render_to_response(
+		self.get_context_data(form=form,
+		                      lotecobranza_form=lotecobranza_form))
+		

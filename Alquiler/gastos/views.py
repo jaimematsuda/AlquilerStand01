@@ -31,7 +31,7 @@ class GastoDetail(DetailView):
 class GastoCreation(CreateView):
 	model = Gasto
 	success_url = reverse_lazy('gastos:list')
-	fields = ['id', 'grupo', 'nombre', 'total'] 
+	fields = ['id', 'grupo', 'nombre'] 
 
 	def get_context_data(self, **kwargs):
 		context = super(GastoCreation, self).get_context_data(**kwargs)
@@ -42,7 +42,7 @@ class GastoCreation(CreateView):
 class GastoUpdate(UpdateView):
 	model = Gasto
 	success_url = reverse_lazy('gastos:list')
-	fields = ['id', 'grupo', 'nombre', 'total'] 
+	fields = ['id', 'grupo', 'nombre'] 
 
 	def get_context_data(self, **kwargs):
 		context = super(GastoUpdate, self).get_context_data(**kwargs)

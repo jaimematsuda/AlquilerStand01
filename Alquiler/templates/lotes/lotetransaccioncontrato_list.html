@@ -13,7 +13,7 @@
     </p>
 	<table>
 		<tr>
-			<td>PISO</td>
+			<td>NUM. COBR.</td>
 			<td>CONTRATO</td>
 			<td>LOCAL</td>
 			<td>PERIODO</td>
@@ -22,12 +22,12 @@
 		</tr>
 		{% for lt in lote_cobranza %}
 			<tr>
-	  				<td>{{ lt.cobranza.contrato.local.piso }}</td>
-	    			<td>{{ lt.cobranza.contrato.id }}</td>
-	    			<td>{{ lt.cobranza.contrato.local }}</td>
-	    			<td>{{ lt.cobranza.periodo }}</td>
-	    			<td>{{ lt.cobranza.fecha }}</td>
-	    			<td>{{ lt.cobranza.monto }}</td>
+  				<td><a href="{% url "lotes:edit_cobranza" lt.pk %}" >{{ lt.pk }}</a></td>
+    			<td>{{ lt.cobranza.contrato.id }}</td>
+    			<td>{{ lt.cobranza.contrato.local }}</td>
+    			<td>{{ lt.cobranza.periodo }}</td>
+    			<td>{{ lt.cobranza.fecha }}</td>
+    			<td>{{ lt.cobranza.monto }}</td>
 			</tr>
 		{% endfor %}
 		<tr>
@@ -36,35 +36,34 @@
 			<td></td>
 			<td></td>
 			<td>Total</td>
-			<td>{{ cobranza_total }}</td>
-			{% for lt in cobranza_total %}
-				<td>{{ lt.total }}</td>
-			{% endfor %}
+			<td>{{ cobranza_total.total }}
 		</tr>
 	</table>
 	<h1>Pagos</h1>
-  		{% for pr in lote_cobranza %}
-  			<tr>
-  				<td>{{ pr.id }}</td>
-    			<td>{{ pr.contrato__pk }}</td>
-    			<td>{{ pr.periodo }}</td>
-    			<td>{{ pr.contrato__monto }}</td>
-    			<td>{{ pr.monto_cobrado }}</td>
-    			{% if pr.contrato__monto == pr.monto_cobrado %}
-					<td>Cancelado</td>
-				{% elif pr.contrato__monto > pr.monto_cobrado %}
-					<td>A Cuenta</td>
-				{% else %}
-					<td>Revisar</td>
-				{% endif %}
-    			<td>color</td>
-  			</tr>
-  		{% endfor %}
-
-	<p> 
-		los locales con contratos nuevos van a aparecer como nuevo mientras no 
-		se ingrese una cobranza en el modulo de cobranza, eso significa que el 
-		cobrador debe ingresar los datos online para que este reporte este 
-		actualizado en tiempo real. Y los nuevos aparecen arriba
-	</p>
+	<table>
+		<tr>
+			<td>TIPO</td>
+			<td>FECHA</td>
+			<td>GRUPO</td>
+			<td>NOMBRE</td>
+			<td>MONTO</td>
+		</tr>
+		{% for lt in lote_pago %}
+			<tr>
+  				<td>{{ lt.lote_pago }}</td>
+    			<td>{{ lt.lote_pago }}</td>
+    			<td>{{ lt.lote_pago }}</td>
+    			<td>{{ lt.lote_pago }}</td>
+    			<td>{{ lt.lote_pago }}</td>
+			</tr>
+		{% endfor %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td>{{ lote_pago.total }}
+		</tr>
+	</table>
+	<p>fin</p>
 {% endblock %}

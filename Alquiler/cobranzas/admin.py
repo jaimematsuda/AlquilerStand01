@@ -10,7 +10,7 @@ class AdminCobranzaTipo(admin.ModelAdmin):
 
 @admin.register(Cobranza)
 class AdminCobranza(admin.ModelAdmin):
-	list_display = ('tipo', 'contrato', 'periodo', 'fecha', 'monto',)
+	list_display = ('id', 'tipo', 'contrato', 'periodo', 'fecha', 'monto',)
 	list_filter = ('tipo', 'contrato', 'periodo', 'fecha',)
 
 

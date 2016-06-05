@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<form action="" method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    {{ lotecobranza_form.as_p }}
+	    <input type="submit" value="Submit" />
+	</form>
+	<p>
+		<a href="{% url "lotes:transaction" %}">Regresar</a>
+	</p>
+	<p>{{ pk }}</p>
+{% endblock %}
