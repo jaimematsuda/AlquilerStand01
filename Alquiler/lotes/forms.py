@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import inlineformset_factory
 from django.contrib.admin import widgets
 
 from cobranzas.forms import CobranzaForm 
@@ -14,7 +13,7 @@ class LoteNuevaCobranzaForm(CobranzaForm):
 		self.fields['tipo'].initial = tipo[0]['id']
 
 
-LoteCobranzaFormSet = inlineformset_factory(Cobranza, LoteCobranza, can_delete=False, fields=('lote',))
+LoteCobranzaFormSet = forms.inlineformset_factory(Cobranza, LoteCobranza, can_delete=False, fields=('lote',))
 
 
 class LoteEditarCobranzaForm(forms.ModelForm):

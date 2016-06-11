@@ -15,7 +15,7 @@ class AdminPago(admin.ModelAdmin):
 
 @admin.register(PagoMantenimiento)
 class AdminPagoMantenimiento(admin.ModelAdmin):
-	list_display = ('pk', 'pago', 'mantenimiento', 'monto',)
+	list_display = ('pk', 'pago', 'mantenimiento_periodo', 'monto',)
 
 
 @admin.register(PagoGasto)

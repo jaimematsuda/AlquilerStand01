@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 from gastos.models import Gasto
-from mantenimientos.models import Mantenimiento 
+from mantenimientos.models import Mantenimiento, MantenimientoPeriodo  
 
 
 class PagoTipo(models.Model):
@@ -24,16 +24,16 @@ class Pago(models.Model):
 		ordering = ('fecha',)
 
 	def __unicode__(self):
-		return u'%s' % (self.fecha)
+		return u'%s %s' % (self.id, self.fecha)
 
 
 class PagoMantenimiento(models.Model):
 	pago = models.OneToOneField(Pago, primary_key=True)
-	mantenimiento = models.ForeignKey(Mantenimiento)
+	mantenimiento_periodo = models.ForeignKey(MantenimientoPeriodo)
 	monto = models.DecimalField(max_digits=7, decimal_places=2)
 
 	def __str__(self):
-		return '%s %s' % (self.pago, self.mantenimiento)
+		return '%s %s' % (self.pago, self.mantenimiento_periodo)
 
 
 class PagoGasto(models.Model):
