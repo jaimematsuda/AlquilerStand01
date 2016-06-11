@@ -33,8 +33,8 @@
                 {% if lt.tipo.id = 1 %}
                     {% for pm in pago_mantenimiento %}
                         {% if pm.pago.pk == lt.id %}
-                            <td>{{ pm.mantenimiento.grupo }}</td>
-                            <td>{{ pm.mantenimiento.nombre }}</td>
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
                             <td>{{ pm.monto }}</td>
                         {% endif %}
                     {% endfor %}
