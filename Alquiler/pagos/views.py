@@ -11,9 +11,9 @@ from django.views.generic.edit import (
 )
 
 from .models import Pago, PagoMantenimiento, PagoGasto
-from .forms import (PagoForm, PagoMantenimientoForm, MantenimientoForm, 
-	MantenimientoPeriodoForm, PagoGastoFormSet)
+from .forms import PagoForm, PagoMantenimientoForm, PagoGastoForm
 from mantenimientos.models import MantenimientoPeriodo
+from mantenimientos.forms import MantenimientoForm, MantenimientoPeriodoForm
 
 # Pagos relacionados a MANTENIMIENTO O GASTO
 class PagoList(ListView):
@@ -67,13 +67,14 @@ class PagoCreation(CreateView):
 		self.object = None
 		form_class = self.get_form_class()
 		form = self.get_form(form_class)
-		pagomantenimiento_form = PagoMantenimientoForm()
-		mantenimientoperiodo_form = MantenimientoPeriodoForm()
+		# prueba post pagomantenimiento_form = PagoMantenimientoForm()
+		# prueba post mantenimientoperiodo_form = MantenimientoPeriodoForm()
 		return self.render_to_response(self.get_context_data(form=form, 
-			pagomantenimiento_form=pagomantenimiento_form,
-			mantenimientoperiodo_form=mantenimientoperiodo_form,
+			#pagomantenimiento_form=pagomantenimiento_form,
+			#mantenimientoperiodo_form=mantenimientoperiodo_form,
 			))
 
+	'''	
 	def post(self, request, *args, **kwargs):
 		"""
 		Handles POST requests, instantiating a form instance and its inline
@@ -86,11 +87,53 @@ class PagoCreation(CreateView):
 		mantenimientoperiodo_form = MantenimientoPeriodoForm(self.request.POST)
 		pagomantenimiento_form = PagoMantenimientoForm(self.request.POST)
 		if (form.is_valid() and mantenimientoperiodo_form.is_valid()):
-		    return self.form_valid(form, mantenimientoperiodo_form, pagomantenimiento_form)
+		    return self.form_valid(form, mantenimientoperiodo_form, 
+		    	pagomantenimiento_form)
 		else:
-		    return self.form_invalid(form, mantenimientoperiodo_form, pagomantenimiento_form)
+		    return self.form_invalid(form, mantenimientoperiodo_form, 
+		    	pagomantenimiento_form)
+	'''
+	def post(self, request, *args, **kwargs):
+		"""
+		Handles POST requests, instantiating a form instance and its inline
+		formsets with the passed POST variables and then checking them for
+		validity.
+		"""
+		paso = self.request.POST.get('monto')
+		tipo = self.request.POST.get('tipo')
+		self.object = None
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
 
-	def form_valid(self, form, mantenimientoperiodo_form, pagomantenimiento_form):
+		if not paso:
+			mantenimientoperiodo_form = MantenimientoPeriodoForm()
+			pagomantenimiento_form = PagoMantenimientoForm()
+			pagogasto_form = PagoGastoForm()
+
+			if (tipo == '1'):
+				return self.render_to_response(self.get_context_data(form=form, 
+					mantenimientoperiodo_form=mantenimientoperiodo_form,
+					pagomantenimiento_form=pagomantenimiento_form,
+					))
+
+			if (tipo == '2'):
+				return self.render_to_response(self.get_context_data(form=form, 
+					pagogasto_form=pagogasto_form,
+					))
+
+		if (tipo == '1'):
+			mantenimientoperiodo_form = MantenimientoPeriodoForm(self.request.POST)
+			pagomantenimiento_form = PagoMantenimientoForm(self.request.POST)
+			
+			if (form.is_valid() and mantenimientoperiodo_form.is_valid()):
+			    return self.form_valid(form, mantenimientoperiodo_form, 
+			    	pagomantenimiento_form)
+			else:
+			    return self.form_invalid(form, mantenimientoperiodo_form, 
+			    	pagomantenimiento_form)
+		
+	def form_valid(self, form, mantenimientoperiodo_form, 
+		pagomantenimiento_form):
 		"""
 		Called if all forms are valid. Creates a Recipe instance along with
 		associated Ingredients and Instructions and then redirects to a
@@ -106,21 +149,36 @@ class PagoCreation(CreateView):
 		nuevo_pagomantenimiento.save()
 		return HttpResponseRedirect(self.get_success_url())
 
-		'''
-		article = Article.object.get(pk=1)    # se obtiene el objeto
-		pagomantenimiento_form = PagoMantenimientoForm(instance=article) # carga los datos del la base al form
+	'''
+	article = Article.object.get(pk=1)    # se obtiene el objeto
+	pagomantenimiento_form = PagoMantenimientoForm(instance=article) # carga los datos del la base al form
 
-		'''
+	'''
 
-	def form_invalid(self, form, mantenimientoperiodo_form, pagomantenimiento_form):
+	def form_invalid(self, form, mantenimientoperiodo_form, 
+		pagomantenimiento_form):
 		"""
 		Called if a form is invalid. Re-renders the context data with the
 		data-filled forms and errors.
 		"""
 		return self.render_to_response(self.get_context_data(form=form, 
 			mantenimientoperiodo_form=mantenimientoperiodo_form,
-			pagomantenimiento_form=pagomantenimiento_form
+			pagomantenimiento_form=pagomantenimiento_form,
 			))
+
+	'''	
+	self.object = None
+	form_class = self.get_form_class()
+	form = self.get_form(form_class)
+	mantenimientoperiodo_form = MantenimientoPeriodoForm(self.request.POST)
+	pagomantenimiento_form = PagoMantenimientoForm(self.request.POST)
+	if (form.is_valid() and mantenimientoperiodo_form.is_valid()):
+	    return self.form_valid(form, mantenimientoperiodo_form, 
+	    	pagomantenimiento_form)
+	else:
+	    return self.form_invalid(form, mantenimientoperiodo_form, 
+	    	pagomantenimiento_form)
+	'''
 
 
 class PagoUpdate(UpdateView):

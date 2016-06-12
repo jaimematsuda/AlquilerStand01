@@ -10,9 +10,11 @@
 	    {{ form.as_p }}
 	    {{ mantenimientoperiodo_form.as_p}}
 	    {{ pagomantenimiento_form.as_p}}
+	    {{ pagogasto_form.as_p}}
 	    <input type="submit" value="Submit" />
 	</form>
 	<p>
 		<a href="{% url "pagos:list" month year %}">Regresar</a>
 	</p>
+	<p>{{ paso }}</p>
 {% endblock %}
