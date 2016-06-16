@@ -1,0 +1,24 @@
+    <script type="text/javascript">
+        function SumarColumna(grilla, columna){
+            var resultVal = 0.0; 
+            $("#" + grilla + " tbody tr").not(':first').not(':last').each(
+            function(){
+                var celdaValor = $(this).find('td:eq(' + columna + ')');
+                if (celdaValor.val() != null)
+                    resultVal += parseFloat(celdaValor.html().replace(',','.'));     
+                } //function    
+            ) //each
+            $("#" + grilla + " tbody tr:last td:eq(" + columna + ")").html(resultVal.toFixed(2).toString().replace('.',','));   
+        }
+
+        $("#submit").click(function(){
+            var year = $("#year").val();
+            var month = $("#month").val();
+            location.pathname = "/pago/"+ month + "/" + year;
+        });
+
+        $(function(){
+            SumarColumna('listaPago', 5);
+        })
+ 
+    </script>

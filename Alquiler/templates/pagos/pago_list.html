@@ -15,49 +15,97 @@
     </form>
     <p><a href="{% url "pagos:new" month year %}">Agregar Pago</a></p>
     <p>{{ datos }}</p>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>FECHA</td>
-            <td>TIPO</td>
-            <td>GRUPO</td>
-            <td>NOMBRE</td>
-            <td>MONTO</td>
-            <td></td>
-            <td></td>
-        </tr>
-        {% for lt in object_list %}
+    <table id="listaPago">
+        <caption>LISTA DE PAGOS</caption>
+        <thead>
             <tr>
-                <td>{{ lt.id }}</td>
-                <td>{{ lt.fecha }}</td>
-                <td>{{ lt.tipo }}</td>
-                {% if lt.tipo.id = 1 %}
-                    {% for pm in pago_mantenimiento %}
-                        {% if pm.pago.pk == lt.id %}
-                            <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
-                            <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
-                            <td>{{ pm.monto }}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    {% for pg in pago_gasto %}
-                        {% if pg.pago.pk == lt.id %}
-                            <td>{{ pg.gasto.grupo }}</td>
-                            <td>{{ pg.gasto.nombre }}</td>
-                            <td>{{ pg.monto }}</td>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                <td><a href="{% url "pagos:detail" lt.id %}">Ver</a></td>
-                <td><a href="{% url "pagos:edit" lt.id %}">Editar</a></td>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>TIPO</th>
+                <th>GRUPO</th>
+                <th>NOMBRE</td>
+                <th>MONTO</th>
+                <th></th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
+        {% for lt in object_list %}
+            
+                <tr>
+                    <td>{{ lt.id }}</td>
+                    <td>{{ lt.fecha }}</td>
+                    <td>{{ lt.tipo }}</td>
+                    {% if lt.tipo.id = 1 %}
+                        {% for pm in pago_mantenimiento %}
+                            {% if pm.pago.pk == lt.id %}
+                                <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
+                                <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
+                                <td>{{ pm.monto }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for pg in pago_gasto %}
+                            {% if pg.pago.pk == lt.id %}
+                                <td>{{ pg.gasto.grupo }}</td>
+                                <td>{{ pg.gasto.nombre }}</td>
+                                <td>{{ pg.monto }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <td><a href="{% url "pagos:detail" lt.id %}">Ver</a></td>
+                    <td><a href="{% url "pagos:edit" lt.id %}">Editar</a></td>
+                </tr>
+            
         {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</td>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
     <script type="text/javascript">
+        function SumarColumna(grilla, columna){
+            var resultVal = 0.0; 
+            $("#" + grilla + " tbody tr").each(
+                function(){
+                    var celdaValor = $(this).find('td:eq(' + columna + ')');
+                    if (celdaValor.val() != null)
+                        resultVal += parseFloat(celdaValor.html());     
+                    } //function    
+                ) //each
+            $("#" + grilla + " tfoot tr:last th:eq(" + columna + ")").html(resultVal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        }
+
+        function PonerComa(grilla, columna){
+            var resultVal = 0.0; 
+            $("#" + grilla + " tbody tr").each(
+                function(){
+                    var celdaValor = $(this).find('td:eq(' + columna + ')');
+                    if (celdaValor.val() != null)
+                        var valor = parseFloat(celdaValor.html());
+                        $(this).find('td:eq(' + columna + ')').html(valor.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));  
+                    } //function    
+                ) //each
+        }
+
         $("#submit").click(function(){
             var year = $("#year").val();
             var month = $("#month").val();
             location.pathname = "/pago/"+ month + "/" + year;
         });
+
+        $(function(){
+            SumarColumna('listaPago', 5);
+            PonerComa('listaPago', 5);
+        })
     </script>
 {% endblock %}

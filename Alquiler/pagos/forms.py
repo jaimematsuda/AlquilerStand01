@@ -28,7 +28,7 @@ class PagoMantenimientoForm(forms.ModelForm):
 class PagoGastoForm(forms.ModelForm):
 	class Meta:
 		model = PagoGasto
-		fields = ['pago', 'gasto', 'monto']
+		exclude = ['pago']
 
 
 PagoMantenimientoFormSet = forms.inlineformset_factory(Pago, PagoMantenimiento, can_delete=False, fields=('pago', 'mantenimiento_periodo', 'monto',))

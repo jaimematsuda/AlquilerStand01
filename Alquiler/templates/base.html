@@ -4,10 +4,10 @@
 	{% load staticfiles %}
 	<meta charset="UTF-8">
 	<title>{% block page_title %}{% endblock %}</title>
-	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-	<script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+	<!--<script type="text/javascript" src="{% static 'js/base.js' %}"></script>-->
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 	<!--
@@ -15,7 +15,8 @@
 		$(function(){
 			$("#datepicker").datepicker({dateFormat: 'dd/mm/yy'});
 		})
-	</script> -->
+	</script>
+	-->
 </head>
 <body>
 	<header>
@@ -26,7 +27,7 @@
 		</div>
 		<div>
 			Bienvenido,
-			<strong>Miguel Angel</strong>
+			<strong>Juan</strong>
 			. /
 			<a href="">Cerrar Sesion</a>
 		</div>
