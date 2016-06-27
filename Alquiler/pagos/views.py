@@ -41,7 +41,7 @@ class PagoList(ListView):
 		else:
 			month = self.args[0]
 			year = self.args[1]
-		context.update({'titulo': 'Lista'})
+		context.update({'titulo': 'Lista de Pagos'})
 		context.update({'pago_mantenimiento': pago_mantenimiento})
 		context.update({'pago_gasto': pago_gasto})
 		context.update({'month': month})
@@ -64,9 +64,14 @@ class PagoCreation(CreateView):
 	success_url = reverse_lazy('pagos:list')
 	form_class = PagoForm
 
-	def get_context_data(self, **kwargs):
-		month = self.args[0]
-		year = self.args[1]
+	def get_context_data(self, *args, **kwargs):
+		if self.args == ():
+			d = datetime.date.today()
+			month = '{:02d}'.format(d.month)
+			year = '{:04d}'.format(d.year)
+		else:
+			month = self.args[0]
+			year = self.args[1]
 		context = super(PagoCreation, self).get_context_data(**kwargs)
 		context.update({'titulo': 'Nuevo Pago'})
 		context.update({'month': month})

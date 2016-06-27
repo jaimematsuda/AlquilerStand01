@@ -16,4 +16,14 @@
 	<p>
 		<a href="{% url "pagos:list" month year %}">Regresar</a>
 	</p>
+	<script type="text/javascript">
+        $(function(){
+        	$("#datepicker").datepicker({dateFormat: 'dd/mm/yy'});
+            EnviarMesAnio();
+            SumarColumna('listaPago', 5);
+            PonerComaColumna('listaPago', 5);
+            AgregarPago("{% url "pagos:new" month year %}");
+            MesPredeterminado("{{ month }}")
+        })
+    </script>
 {% endblock %}

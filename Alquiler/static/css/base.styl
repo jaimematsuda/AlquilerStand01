@@ -1,0 +1,140 @@
+@import "nib"
+
+gris_A = #EEEEEE
+gris_B = #E1E1E1
+
+body 
+	font-family "Roboto","Lucida Grande",Verdana,Arial,sans-serif
+	font-size 15px
+
+.Table-lista 
+	width 100%
+	caption
+		padding 0.5em
+		font-size 20px
+	thead tr 
+		&:nth-child(odd)
+			background-color #E1E1E1
+	tbody tr
+		&:nth-child(odd)
+			background-color #FFFFFF
+		&:nth-child(even)
+			background-color #EEEEEE		
+	tfoot tr
+		background-color: #E1E1E1		
+	td, th 
+		padding 0.4em 1.5em 0.4em 0.5em
+		&:nth-child(6)
+			text-align right
+			padding	0.4em 0.5em 0.4em 1.5em
+					
+.Canvas
+	overflow hidden
+	position relative
+	&-main
+		padding 10px 10px
+		section 
+			position relative
+			margin auto
+			width 80%
+		&-form_month_year
+			float right
+			padding-right 20px
+			display table
+			text-align right
+			width 100%
+			color blue
+			input
+				width 60px
+		&-button
+			padding 0.4em
+			margin-left 1em
+			background orange
+			color white
+			border-radius 10px
+			border none
+
+.Header
+	background blue
+	padding 10px
+	position relative
+	height 30px
+	line-height 10px
+	&-logo
+		margin 0
+		font-weight bold
+		text-transform uppercase
+		text-shadow 0 0 10px yellow
+		font-size 18px
+		position absolute
+		top 20px
+		left 250px
+		a 
+			text-decoration none
+			color white
+	&-button
+		padding 0.4em
+		background orange
+		color white
+		border-radius 10px
+		border none
+		position absolute
+		left 20px
+		top 10px	
+	
+.MainMenu
+	margin 0
+	padding 0
+	width 200px
+	position absolute
+	left -200px
+	top 0
+	transition 1s
+	background blue
+	&.is-active
+		left 0
+	&-item
+		text-align center
+		height 50px
+		line-height 50px
+		transition 1s
+		list-style none
+		&:hover
+			background #0E0F0F
+	&-link
+		color white
+		text-decoration none
+		text-transform uppercase
+		font-size 14px
+		display block
+
+@media screen and (min-width : 767px)
+	.Header
+		&-logo
+			position absolute
+			left 20px
+		&-button
+			display none
+		&-login 
+			position absolute
+			right 40px
+			top 0
+			display inline-block
+		&-buttonlogin
+			padding 10px
+			background orange
+			color white
+			border-radius 10px
+			border none
+			position absolute
+			right 20px
+			top 10px	
+			
+	.MainMenu
+		left 400px
+		width auto
+		&-item
+			display inline-block
+		&-link
+			padding 0 30px 
+			

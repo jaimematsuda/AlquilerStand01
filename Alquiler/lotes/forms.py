@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.admin import widgets
 
-from cobranzas.forms import CobranzaForm 
-from .models import LoteCobranza, Lote 
+from .models import LoteCobranza, Lote, LotePago
 from cobranzas.models import Cobranza, CobranzaTipo
+from cobranzas.forms import CobranzaForm
+from pagos.forms import PagoForm 
 
 
 class LoteNuevaCobranzaForm(CobranzaForm):
@@ -23,3 +24,9 @@ class LoteEditarCobranzaForm(forms.ModelForm):
 		widgets = {
 			'fecha': forms.DateInput(attrs={'id': 'datepicker'})
 		}
+
+
+class LotePagoForm(forms.ModelForm):
+	class Meta():
+		model = LotePago
+		fields = ['lote', 'pago']

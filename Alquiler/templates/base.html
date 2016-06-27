@@ -4,45 +4,48 @@
 	{% load staticfiles %}
 	<meta charset="UTF-8">
 	<title>{% block page_title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, user-scalabel=no">
 	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-	<!--<script type="text/javascript" src="{% static 'js/base.js' %}"></script>-->
+	<script type="text/javascript" src="{% static 'js/base.js' %}"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-	<!--
-	<script type="text/javascript">
-		$(function(){
-			$("#datepicker").datepicker({dateFormat: 'dd/mm/yy'});
-		})
-	</script>
-	-->
 </head>
 <body>
-	<header>
-		<div>
-			<h1>
-				<a href="">Administracion</a>
+	<section class="Canvas">
+		<header class="Header is-active">
+			<h1 class="Header-logo">
+				<a href="">Proyecto Alquiler de Stand</a>
 			</h1>
-		</div>
-		<div>
-			Bienvenido,
-			<strong>Juan</strong>
-			. /
-			<a href="">Cerrar Sesion</a>
-		</div>
-	</header>
-	<nav>
-		
-	</nav>
-	<article>
-		<section>
-			{% block contenido %}
-			{% endblock %}
-		</section>
-	</article>
-	<footer>
-		<p>Pie</p>
-	</footer>
+			<button class="Header-button">Menú</button>
+			<ul class="MainMenu">
+				<li class="MainMenu-item">
+					<a href="" class="MainMenu-link">Cobranza</a>
+				</li>
+				<li class="MainMenu-item">
+					<a href="" class="MainMenu-link">Pagos</a>
+				</li>
+				<li class="MainMenu-item">
+					<a href="" class="MainMenu-link">Lista</a>
+				</li>
+				<li class="MainMenu-item">
+					<a href="" class="MainMenu-link">Varios</a>
+				</li>
+			</ul>
+			<div class="Header-login">
+				<button class="Header-buttonlogin">Cerrar_sesión</button>
+			</div>
+		</header>
+		<article class="Canvas-main">
+			<section>
+				{% block contenido %}
+				{% endblock %}
+			</section>
+		</article>
+		<footer>
+			<p>Pie</p>
+		</footer>
+	</section>
 </body>
 </html>

@@ -16,8 +16,10 @@ from cajas.models import Caja, CajaLote
 from bancos.models import Banco, BancoLote
 
 from cobranzas.views import CobranzaList
+from pagos.views import PagoCreation
 
-from .forms import LoteNuevaCobranzaForm, LoteCobranzaFormSet, LoteEditarCobranzaForm
+from .forms import (LoteNuevaCobranzaForm, LoteCobranzaFormSet, 
+	LoteEditarCobranzaForm, LotePagoForm)
 
 
 class LoteList(ListView):
@@ -106,14 +108,18 @@ class LoteTransaccionContratoList(ListView):
 		cobranza_total = LoteCobranza.objects.filter(
 			lote=context['ultimo_lote'], cobranza__tipo__id=1).aggregate(
 			total=Sum('cobranza__monto'))
-		#lote_pago = LotePago.objects.all()
+		lote_pago = LotePago.objects.filter(
+			lote=context['ultimo_lote'])
+		pago_mantenimiento = PagoMantenimiento.objects.all()
+		pago_gasto = PagoGasto.objects.all()
 
 		context.update({'titulo': 'Transacciones'})
 		context.update({'lote_cobranza': lote_cobranza})
 		context.update({'cobranza_total': cobranza_total})
-		#context.update({'lote_pago': lote_pago})
+		context.update({'lote_pago': lote_pago})
+		context.update({'pago_mantenimiento': pago_mantenimiento})
+		context.update({'pago_gasto': pago_gasto})
 		return context
-
 
 class LoteNuevaCobranzaCreation(CreateView):
 	template_name = 'lotes/lotenuevacobranza_form.html'
@@ -220,4 +226,59 @@ class LoteNuevaCobranzaUpdate(UpdateView):
 		return self.render_to_response(
 		self.get_context_data(form=form,
 		                      lotecobranza_form=lotecobranza_form))
-		
+
+
+class LoteNuevoPagoCreation(PagoCreation):
+	def __init__(self, *args, **kwargs):
+		super(LoteNuevoPagoCreation, self).__init__(*args, **kwargs)
+		self.success_url = reverse_lazy('lotes:transaction')
+
+		def form_valid(self, form, tipo, **kwargs):
+			"""
+			Called if all forms are valid. Creates a Recipe instance along with
+			associated Ingredients and Instructions and then redirects to a
+			success page.
+			"""
+			if tipo == '1':
+				lotepago_form = LotePagoForm()
+				ultimo_lote_id = Lote.objects.order_by('id').last()
+				id_pago = Pago.objects.order_by('id').last()
+				nuevo_lotepago = lotepago_form.save(commit=False)
+				nuevo_lotepago.pago = id_pago
+				nuevo_lotepago.lote = ultimo_lote_id
+				nuevo_lotepago.save()
+				return HttpResponseRedirect(self.get_success_url())
+
+			if tipo == '2':
+				lotepago_form = LotePagoForm()
+				ultimo_lote_id = Lote.objects.order_by('id').last()
+				id_pago = Pago.objects.order_by('id').last()
+				nuevo_lotepago = lotepago_form.save(commit=False)
+				nuevo_lotepago.pago = id_pago
+				nuevo_lotepago.lote = ultimo_lote_id
+				nuevo_lotepago.save()
+				return HttpResponseRedirect(self.get_success_url())
+
+			'''
+			if tipo == '1':
+				self.object = form.save()
+				mantenimientoperiodo_form = kwargs['mantenimientoperiodo_form']
+				pagomantenimiento_form = kwargs['pagomantenimiento_form']
+				mantenimientoperiodo_form.save()
+				id_mantperi = MantenimientoPeriodo.objects.order_by('id').last()
+				id_pago = Pago.objects.order_by('id').last()
+				nuevo_pagomantenimiento = pagomantenimiento_form.save(commit=False)
+				nuevo_pagomantenimiento.pago = id_pago
+				nuevo_pagomantenimiento.mantenimiento_periodo = id_mantperi
+				nuevo_pagomantenimiento.save()
+				return HttpResponseRedirect(self.get_success_url())
+
+			if tipo == '2':
+				self.object = form.save()
+				pagogasto_form = kwargs['pagogasto_form']
+				id_pago = Pago.objects.order_by('id').last()
+				nuevo_pagogasto = pagogasto_form.save(commit=False)
+				nuevo_pagogasto.pago = id_pago
+				nuevo_pagogasto.save()
+				return HttpResponseRedirect(self.get_success_url())	
+			'''

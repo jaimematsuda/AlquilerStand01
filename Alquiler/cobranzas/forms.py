@@ -14,7 +14,8 @@ class CobranzaForm(forms.ModelForm):
 		model = Cobranza
 		fields = ['tipo', 'contrato', 'periodo', 'fecha', 'monto']
 		widgets = {
-			'fecha': forms.DateInput(attrs={'id': 'datepicker'})
+			'tipo': forms.TextInput(attrs={'readonly': 'readonly'}),
+			'fecha': forms.DateInput(attrs={'id': 'datepicker'}),
 		}
 
 

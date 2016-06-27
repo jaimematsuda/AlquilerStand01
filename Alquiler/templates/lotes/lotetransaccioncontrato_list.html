@@ -5,21 +5,35 @@
 {% endblock %}
 
 {% block contenido %}
-	<h1>CONTRATO DE ALQUILERES</h1>
-	<h1>LOTE: <i>{{ ultimo_lote }}</i></h1>
-	<h1>Cobranzas</h1>
-	<p>
-        <a href="{% url "lotes:new_cobranza" %}">Agregar Cobranza</a>
-    </p>
-	<table>
-		<tr>
-			<td>NUM. COBR.</td>
-			<td>CONTRATO</td>
-			<td>LOCAL</td>
-			<td>PERIODO</td>
-			<td>F. COBRANZA</td>
-			<td>MONTO</td>
-		</tr>
+	<h2>LOTE: <i>{{ ultimo_lote }}</i></h2>
+	<form id="form_month_year" class="Canvas-main-form_month_year">
+        <label>Lote :</label>
+        <select id="lote" name="lote">
+            <option value="01">1604-01</option>
+            <option value="02">1604-02</option>
+            <option value="03">1604-03</option>
+            <option value="04">1604-04</option>
+            <option value="05">1605-01</option>
+            <option value="06">1605-02</option>
+            <option value="07">1606-01</option>
+            <option value="08">1606-02</option>
+            <option value="09">1606-03</option>
+            <option value="10">1606-04</option>
+        </select>
+        <input type="button" id="submit" value="Filtrar" />
+    </form>
+    <button id="Canvas-main-button" class="Canvas-main-button" name="{% url "lotes:new_cobranza" %}">Agregar Cobranza</button>
+	<table id="listaCobranza" class="Table-lista">
+		<caption>Cobranzas</caption>
+		<thead>
+			<th>NUM. COBR.</th>
+			<th>CONTRATO</th>
+			<th>LOCAL</th>
+			<th>PERIODO</th>
+			<th>F. COBRANZA</th>
+			<th>MONTO</th>
+		</thead>
+		<tbody>
 		{% for lt in lote_cobranza %}
 			<tr>
   				<td><a href="{% url "lotes:edit_cobranza" lt.pk %}" >{{ lt.pk }}</a></td>
@@ -30,40 +44,77 @@
     			<td>{{ lt.cobranza.monto }}</td>
 			</tr>
 		{% endfor %}
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>Total</td>
-			<td>{{ cobranza_total.total }}
-		</tr>
-	</table>
-	<h1>Pagos</h1>
-	<table>
-		<tr>
-			<td>TIPO</td>
-			<td>FECHA</td>
-			<td>GRUPO</td>
-			<td>NOMBRE</td>
-			<td>MONTO</td>
-		</tr>
-		{% for lt in lote_pago %}
+		</tbody>
+		<tfoot>
 			<tr>
-  				<td>{{ lt.lote_pago }}</td>
-    			<td>{{ lt.lote_pago }}</td>
-    			<td>{{ lt.lote_pago }}</td>
-    			<td>{{ lt.lote_pago }}</td>
-    			<td>{{ lt.lote_pago }}</td>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>Total</th>
+				<th></th>
 			</tr>
-		{% endfor %}
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>Total</td>
-			<td>{{ lote_pago.total }}
-		</tr>
+		</tfoot>
 	</table>
-	<p>fin</p>
+    <p>{{ cobranza_total.total }}</p>
+	<br /><br />
+	<button id="Canvas-main-button" class="Canvas-main-button" name="{% url "lotes:new_Pago" %}">Agregar Pago</button>
+	<table id="listaPago" class="Table-lista">
+		<caption>Pagos</caption>
+		<thead>
+			<tr>
+				<th>NUM. PAGO</th>
+				<th>TIPO</th>
+				<th>FECHA</th>
+				<th>GRUPO</th>
+				<th>NOMBRE</th>
+				<th>MONTO</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for lt in lote_pago %}
+            <tr>
+  				<td><a href="" >{{ lt.pago.id }}</a></td>
+                <td>{{ lt.pago.tipo.nombre }}</td>
+                <td>{{ lt.pago.fecha }}</td>
+                {% if lt.pago.tipo.id = 1 %}
+                    {% for pm in pago_mantenimiento %}
+                        {% if pm.pago.pk == lt.pago.id %}
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
+                            <td>{{ pm.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for pg in pago_gasto %}
+                        {% if pg.pago.pk == lt.pago.id %}
+                            <td>{{ pg.gasto.grupo }}</td>
+                            <td>{{ pg.gasto.nombre }}</td>
+                            <td>{{ pg.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </tr>
+		{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>Total</th>
+				<th>{{ lote_pago.total }}</th>
+			</tr>
+		</tfoot>
+	</table>
+	<script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+            SumarColumna('listaPago', 5);
+            PonerComaColumna('listaPago', 5);
+            SumarColumna('listaCobranza', 5);
+            PonerComaColumna('listaCobranza', 5);
+        })
+    </script>
 {% endblock %}

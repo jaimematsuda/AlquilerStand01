@@ -5,18 +5,29 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>Lista de Pagos</h1>
-    <form id="form_month_year">
+    <form id="form_month_year" class="Canvas-main-form_month_year">
         <label>Mes :</label>
-        <input type="text" id="month" name="month" value={{ month }} />
+        <select id="month" name="month">
+            <option value="01" >Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Setiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
         <label>Año :</label>
         <input type="text" id="year" name="year" value={{ year }} />
-        <input type="button" id="submit" value="Enviar" />
+        <input type="button" id="submit" value="Filtrar" />
     </form>
-    <p><a href="{% url "pagos:new" month year %}">Agregar Pago</a></p>
-    <p>{{ datos }}</p>
-    <table id="listaPago">
-        <caption>LISTA DE PAGOS</caption>
+    <button id="Canvas-main-button-1" class="Canvas-main-button" name="{% url "pagos:new" month year %}">Agregar Pago</button>
+    <table id="listaPago" class="Table-lista">
+        <caption>{{ titulo }}</caption>
         <thead>
             <tr>
                 <th>ID</th>
@@ -30,33 +41,31 @@
             </tr>
         </thead>
         <tbody>
-        {% for lt in object_list %}
-            
-                <tr>
-                    <td>{{ lt.id }}</td>
-                    <td>{{ lt.fecha }}</td>
-                    <td>{{ lt.tipo }}</td>
-                    {% if lt.tipo.id = 1 %}
-                        {% for pm in pago_mantenimiento %}
-                            {% if pm.pago.pk == lt.id %}
-                                <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
-                                <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
-                                <td>{{ pm.monto }}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        {% for pg in pago_gasto %}
-                            {% if pg.pago.pk == lt.id %}
-                                <td>{{ pg.gasto.grupo }}</td>
-                                <td>{{ pg.gasto.nombre }}</td>
-                                <td>{{ pg.monto }}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    <td><a href="{% url "pagos:detail" lt.id %}">Ver</a></td>
-                    <td><a href="{% url "pagos:edit" lt.id %}">Editar</a></td>
-                </tr>
-            
+        {% for lt in object_list %}    
+            <tr>
+                <td>{{ lt.id }}</td>
+                <td>{{ lt.fecha }}</td>
+                <td>{{ lt.tipo }}</td>
+                {% if lt.tipo.id = 1 %}
+                    {% for pm in pago_mantenimiento %}
+                        {% if pm.pago.pk == lt.id %}
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
+                            <td>{{ pm.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for pg in pago_gasto %}
+                        {% if pg.pago.pk == lt.id %}
+                            <td>{{ pg.gasto.grupo }}</td>
+                            <td>{{ pg.gasto.nombre }}</td>
+                            <td>{{ pg.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <td><a href="{% url "pagos:detail" lt.id %}">Ver</a></td>
+                <td><a href="{% url "pagos:edit" lt.id %}">Editar</a></td>
+            </tr>   
         {% endfor %}
         </tbody>
         <tfoot>
@@ -73,39 +82,12 @@
         </tfoot>
     </table>
     <script type="text/javascript">
-        function SumarColumna(grilla, columna){
-            var resultVal = 0.0; 
-            $("#" + grilla + " tbody tr").each(
-                function(){
-                    var celdaValor = $(this).find('td:eq(' + columna + ')');
-                    if (celdaValor.val() != null)
-                        resultVal += parseFloat(celdaValor.html());     
-                    } //function    
-                ) //each
-            $("#" + grilla + " tfoot tr:last th:eq(" + columna + ")").html(resultVal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        }
-
-        function PonerComa(grilla, columna){
-            var resultVal = 0.0; 
-            $("#" + grilla + " tbody tr").each(
-                function(){
-                    var celdaValor = $(this).find('td:eq(' + columna + ')');
-                    if (celdaValor.val() != null)
-                        var valor = parseFloat(celdaValor.html());
-                        $(this).find('td:eq(' + columna + ')').html(valor.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));  
-                    } //function    
-                ) //each
-        }
-
-        $("#submit").click(function(){
-            var year = $("#year").val();
-            var month = $("#month").val();
-            location.pathname = "/pago/"+ month + "/" + year;
-        });
-
         $(function(){
+            EnviarMesAnio();
             SumarColumna('listaPago', 5);
-            PonerComa('listaPago', 5);
+            PonerComaColumna('listaPago', 5);
+            BotonAgregar();
+            MesPredeterminado("{{ month }}");
         })
     </script>
 {% endblock %}
