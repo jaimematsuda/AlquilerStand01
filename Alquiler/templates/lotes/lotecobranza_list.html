@@ -5,19 +5,18 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>
-        Lista Lotes de Cobranzas
-    </h1>
-    <p>
-        <a href="{% url "lotes:new_lotecobranza" %}">Agregar Lote de Cobranza</a>
-    </p>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>COBRANZA</td>
-            <td>LOTE</td>
-            <td></td>
-        </tr>
+    {% include "form-button.html" with urldir="lotes:new_lotecobranza" %}
+    <table id="listaLotecobranza" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>COBRANZA</th>
+                <th>LOTE</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
         {% for lt in object_list %}
             <tr>
                 <td>{{ lt.pk }}</td>
@@ -25,6 +24,12 @@
                 <td>{{ lt.lote.pk }}</td>
                 <td><a href="{% url "lotes:edit_lotecobranza" lt.pk %}">Editar</a></td>
             </tr>
-        {% endfor %}     
+        {% endfor %}
+        </tbody>     
     </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>    
 {% endblock %}

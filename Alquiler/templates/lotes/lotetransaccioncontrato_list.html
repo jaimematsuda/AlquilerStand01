@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block contenido %}
-	<h2>LOTE: <i>{{ ultimo_lote }}</i></h2>
 	<form id="form_month_year" class="Canvas-main-form_month_year">
         <label>Lote :</label>
         <select id="lote" name="lote">
@@ -56,7 +55,6 @@
 			</tr>
 		</tfoot>
 	</table>
-    <p>{{ cobranza_total.total }}</p>
 	<br /><br />
 	<button id="Canvas-main-button" class="Canvas-main-button" name="{% url "lotes:new_Pago" %}">Agregar Pago</button>
 	<table id="listaPago" class="Table-lista">

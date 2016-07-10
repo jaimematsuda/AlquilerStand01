@@ -15,7 +15,7 @@ class CajaList(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(CajaList, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Lista'})
+		context.update({'titulo': 'Lista Caja'})
 		return context
 
 

@@ -5,19 +5,18 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>
-        Lista Transacciones
-    </h1>
-    <p>
-        <a href="{% url "bancos:new" %}">Agregar Transaccion</a>
-    </p>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>FECHA</td>
-            <td></td>
-            <td></td>
-        </tr>
+    {% include "form-button.html" with urldir="bancos:new" %}
+    <table id="listaBanco" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
         {% for lt in object_list %}
             <tr>
                 <td>{{ lt.id }}</td>
@@ -25,6 +24,12 @@
                 <td><a href="{% url "bancos:detail" lt.id %}">Ver</a></td>
                 <td><a href="{% url "bancos:edit" lt.id %}">Editar</a></td>
             </tr>
-        {% endfor %}      
+        {% endfor %}
+        </tbody>      
     </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>    
 {% endblock %}

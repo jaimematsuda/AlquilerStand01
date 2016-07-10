@@ -20,6 +20,8 @@ from pagos.views import PagoCreation
 
 from .forms import (LoteNuevaCobranzaForm, LoteCobranzaFormSet, 
 	LoteEditarCobranzaForm, LotePagoForm)
+from pagos.forms import PagoForm, PagoMantenimientoForm, PagoGastoForm
+from mantenimientos.forms import MantenimientoForm, MantenimientoPeriodoForm
 
 
 class LoteList(ListView):
@@ -227,58 +229,208 @@ class LoteNuevaCobranzaUpdate(UpdateView):
 		self.get_context_data(form=form,
 		                      lotecobranza_form=lotecobranza_form))
 
+class LoteNuevoPagoCreation(CreateView):
+	template_name = 'lotes/lotenuevopago_form.html'
+	success_url = reverse_lazy('lotes:transaction')
+	form_class = PagoForm
 
+	def get_context_data(self, *args, **kwargs):
+		context = super(LoteNuevoPagoCreation, self).get_context_data(**kwargs)
+		context.update({'titulo': 'Nuevo Pago Lote'})
+		return context
+
+	def get(self, request, *args, **kwargs):
+		"""
+		Handles GET requests and instantiates blank versions of the form
+		and its inline formsets.
+		"""
+		self.object = None
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		# prueba post pagomantenimiento_form = PagoMantenimientoForm()
+		# prueba post mantenimientoperiodo_form = MantenimientoPeriodoForm()
+		return self.render_to_response(self.get_context_data(form=form, 
+			#pagomantenimiento_form=pagomantenimiento_form,
+			#mantenimientoperiodo_form=mantenimientoperiodo_form,
+			))
+
+
+	def post(self, request, *args, **kwargs):
+		"""
+		Handles POST requests, instantiating a form instance and its inline
+		formsets with the passed POST variables and then checking them for
+		validity.
+		"""
+		self.object = None
+		tipopago = self.request.POST.get('monto')
+		tipo = self.request.POST.get('tipo')
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+
+		if not tipopago:
+			mantenimientoperiodo_form = MantenimientoPeriodoForm()
+			pagomantenimiento_form = PagoMantenimientoForm()
+			pagogasto_form = PagoGastoForm()
+
+			if (tipo == '1'):
+				return self.render_to_response(self.get_context_data(form=form, 
+					mantenimientoperiodo_form=mantenimientoperiodo_form,
+					pagomantenimiento_form=pagomantenimiento_form,
+					))
+
+			if (tipo == '2'):
+				return self.render_to_response(self.get_context_data(form=form, 
+					pagogasto_form=pagogasto_form,
+					))
+
+		if (tipo == '1'):
+			mantenimientoperiodo_form = MantenimientoPeriodoForm(self.request.POST)
+			pagomantenimiento_form = PagoMantenimientoForm(self.request.POST)
+			
+			if (form.is_valid() and mantenimientoperiodo_form.is_valid()):
+				kwargs['mantenimientoperiodo_form'] = mantenimientoperiodo_form
+				kwargs['pagomantenimiento_form'] = pagomantenimiento_form
+				return self.form_valid(form, tipo, **kwargs)
+			else:
+			    #return self.form_invalid(form, mantenimientoperiodo_form, pagomantenimiento_form, tipo)
+				kwargs['mantenimientoperiodo_form'] = mantenimientoperiodo_form
+				kwargs['pagomantenimiento_form'] = pagomantenimiento_form
+				return self.form_invalid(form, tipo, **kwargs)
+
+		if (tipo == '2'):
+			pagogasto_form = PagoGastoForm(self.request.POST)
+			
+			if (form.is_valid() and pagogasto_form.is_valid()):
+				kwargs['pagogasto_form'] = pagogasto_form
+				return self.form_valid(form, tipo, **kwargs)
+			else:
+				kwargs['pagogasto_form'] = pagogasto_form
+				return self.form_invalid(form, tipo, **kwargs)
+
+	
+	#def form_valid(self, form, mantenimientoperiodo_form, 
+	#	pagomantenimiento_form, tipo):
+	def form_valid(self, form, tipo, **kwargs):
+		"""
+		Called if all forms are valid. Creates a Recipe instance along with
+		associated Ingredients and Instructions and then redirects to a
+		success page.
+		"""
+		if tipo == '1':
+			self.object = form.save()
+			mantenimientoperiodo_form = kwargs['mantenimientoperiodo_form']
+			pagomantenimiento_form = kwargs['pagomantenimiento_form']
+			mantenimientoperiodo_form.save()
+			id_mantperi = MantenimientoPeriodo.objects.order_by('id').last()
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_pagomantenimiento = pagomantenimiento_form.save(commit=False)
+			nuevo_pagomantenimiento.pago = id_pago
+			nuevo_pagomantenimiento.mantenimiento_periodo = id_mantperi
+			nuevo_pagomantenimiento.save()
+			lotepago_form = LotePagoForm()
+			ultimo_lote_id = Lote.objects.order_by('id').last()
+			nuevo_lotepago = lotepago_form.save(commit=False)
+			nuevo_lotepago.pago = id_pago
+			nuevo_lotepago.lote = ultimo_lote_id
+			nuevo_lotepago.save()
+			return HttpResponseRedirect(self.get_success_url())
+
+		if tipo == '2':
+			self.object = form.save()
+			pagogasto_form = kwargs['pagogasto_form']
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_pagogasto = pagogasto_form.save(commit=False)
+			nuevo_pagogasto.pago = id_pago
+			nuevo_pagogasto.save()
+			lotepago_form = LotePagoForm()
+			ultimo_lote_id = Lote.objects.order_by('id').last()
+			nuevo_lotepago = lotepago_form.save(commit=False)
+			nuevo_lotepago.pago = id_pago
+			nuevo_lotepago.lote = ultimo_lote_id
+			nuevo_lotepago.save()
+			return HttpResponseRedirect(self.get_success_url())			
+
+	def form_invalid(self, form, tipo, **kwargs):
+		"""
+		Called if a form is invalid. Re-renders the context data with the
+		data-filled forms and errors.
+		"""
+		if tipo == '1':
+			mantenimientoperiodo_form = kwargs['mantenimientoperiodo_form']
+			pagomantenimiento_form = kwargs['pagomantenimiento_form']
+			return self.render_to_response(self.get_context_data(form=form, 
+				mantenimientoperiodo_form=mantenimientoperiodo_form,
+				pagomantenimiento_form=pagomantenimiento_form,
+				))
+
+		if tipo == '2':
+			pagogasto_form = kwargs['pagogasto_form']
+			return self.render_to_response(self.get_context_data(form=form, 
+				pagogasto_form=pagogasto_form,
+				))
+
+
+
+
+
+
+"""
 class LoteNuevoPagoCreation(PagoCreation):
 	def __init__(self, *args, **kwargs):
 		super(LoteNuevoPagoCreation, self).__init__(*args, **kwargs)
 		self.success_url = reverse_lazy('lotes:transaction')
 
-		def form_valid(self, form, tipo, **kwargs):
-			"""
-			Called if all forms are valid. Creates a Recipe instance along with
-			associated Ingredients and Instructions and then redirects to a
-			success page.
-			"""
-			if tipo == '1':
-				lotepago_form = LotePagoForm()
-				ultimo_lote_id = Lote.objects.order_by('id').last()
-				id_pago = Pago.objects.order_by('id').last()
-				nuevo_lotepago = lotepago_form.save(commit=False)
-				nuevo_lotepago.pago = id_pago
-				nuevo_lotepago.lote = ultimo_lote_id
-				nuevo_lotepago.save()
-				return HttpResponseRedirect(self.get_success_url())
+		PagoCreation.__init__.form_valid(self, form, tipo, **kwargs)
 
-			if tipo == '2':
-				lotepago_form = LotePagoForm()
-				ultimo_lote_id = Lote.objects.order_by('id').last()
-				id_pago = Pago.objects.order_by('id').last()
-				nuevo_lotepago = lotepago_form.save(commit=False)
-				nuevo_lotepago.pago = id_pago
-				nuevo_lotepago.lote = ultimo_lote_id
-				nuevo_lotepago.save()
-				return HttpResponseRedirect(self.get_success_url())
+		#def form_valid(self, form, tipo, **kwargs):
+"""
+"""
+		Called if all forms are valid. Creates a Recipe instance along with
+		associated Ingredients and Instructions and then redirects to a
+		success page.
+"""
+"""
+		if tipo == '1':
+			lotepago_form = LotePagoForm()
+			ultimo_lote_id = Lote.objects.order_by('id').last()
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_lotepago = lotepago_form.save(commit=False)
+			nuevo_lotepago.pago = id_pago
+			nuevo_lotepago.lote = ultimo_lote_id
+			nuevo_lotepago.save()
+			return HttpResponseRedirect(self.get_success_url())
 
-			'''
-			if tipo == '1':
-				self.object = form.save()
-				mantenimientoperiodo_form = kwargs['mantenimientoperiodo_form']
-				pagomantenimiento_form = kwargs['pagomantenimiento_form']
-				mantenimientoperiodo_form.save()
-				id_mantperi = MantenimientoPeriodo.objects.order_by('id').last()
-				id_pago = Pago.objects.order_by('id').last()
-				nuevo_pagomantenimiento = pagomantenimiento_form.save(commit=False)
-				nuevo_pagomantenimiento.pago = id_pago
-				nuevo_pagomantenimiento.mantenimiento_periodo = id_mantperi
-				nuevo_pagomantenimiento.save()
-				return HttpResponseRedirect(self.get_success_url())
+		if tipo == '2':
+			lotepago_form = LotePagoForm()
+			ultimo_lote_id = Lote.objects.order_by('id').last()
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_lotepago = lotepago_form.save(commit=False)
+			nuevo_lotepago.pago = id_pago
+			nuevo_lotepago.lote = ultimo_lote_id
+			nuevo_lotepago.save()
+			return HttpResponseRedirect(self.get_success_url())
 
-			if tipo == '2':
-				self.object = form.save()
-				pagogasto_form = kwargs['pagogasto_form']
-				id_pago = Pago.objects.order_by('id').last()
-				nuevo_pagogasto = pagogasto_form.save(commit=False)
-				nuevo_pagogasto.pago = id_pago
-				nuevo_pagogasto.save()
-				return HttpResponseRedirect(self.get_success_url())	
-			'''
+		'''
+		if tipo == '1':
+			self.object = form.save()
+			mantenimientoperiodo_form = kwargs['mantenimientoperiodo_form']
+			pagomantenimiento_form = kwargs['pagomantenimiento_form']
+			mantenimientoperiodo_form.save()
+			id_mantperi = MantenimientoPeriodo.objects.order_by('id').last()
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_pagomantenimiento = pagomantenimiento_form.save(commit=False)
+			nuevo_pagomantenimiento.pago = id_pago
+			nuevo_pagomantenimiento.mantenimiento_periodo = id_mantperi
+			nuevo_pagomantenimiento.save()
+			return HttpResponseRedirect(self.get_success_url())
+
+		if tipo == '2':
+			self.object = form.save()
+			pagogasto_form = kwargs['pagogasto_form']
+			id_pago = Pago.objects.order_by('id').last()
+			nuevo_pagogasto = pagogasto_form.save(commit=False)
+			nuevo_pagogasto.pago = id_pago
+			nuevo_pagogasto.save()
+			return HttpResponseRedirect(self.get_success_url())	
+		'''
+"""

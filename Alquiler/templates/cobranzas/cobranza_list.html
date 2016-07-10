@@ -5,25 +5,24 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>
-        Lista de Cobranzas
-    </h1>
-    <p>
-        <a href="{% url "cobranzas:new" %}">Agregar Cobranza</a>
-    </p>
-    <table>
-        <tr>
-            <td>TIPO</td>
-            <td>PISO</td>
-            <td>CONTRATO</td>
-            <td>LOCAL</td>
-            <td>PERIODO</td>
-            <td>FECHA DE COBRANZA</td>
-            <td>MONTO</td>
-            <td>LOTE</td>
-            <td></td>
-            <td></td>
-        </tr>
+    {% include "form-button.html" with urldir="cobranzas:new" %}    
+    <table id="listaCobranza" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>TIPO</th>
+                <th>PISO</th>
+                <th>CONTRATO</th>
+                <th>LOCAL</th>
+                <th>PERIODO</th>
+                <th>FECHA DE COBRANZA</th>
+                <th>MONTO</th>
+                <th>LOTE</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
         {% for pr in object_list %}
             <tr>
                 <td>{{ pr.tipo }}</td>
@@ -42,5 +41,11 @@
                 <td><a href="{% url "cobranzas:edit" pr.id %}">Editar</a></td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>  
 {% endblock %}

@@ -21,16 +21,16 @@
 			<button class="Header-button">Menú</button>
 			<ul class="MainMenu">
 				<li class="MainMenu-item">
-					<a href="" class="MainMenu-link">Cobranza</a>
+					<a href="{% url "lotes:transaction" %}" class="MainMenu-link">Lote</a>
 				</li>
 				<li class="MainMenu-item">
-					<a href="" class="MainMenu-link">Pagos</a>
+					<a href="{% url "cobranzas:list" %}" class="MainMenu-link">Cobranza</a>
 				</li>
 				<li class="MainMenu-item">
-					<a href="" class="MainMenu-link">Lista</a>
+					<a href="{% url "pagos:list" %}" class="MainMenu-link">Pago</a>
 				</li>
 				<li class="MainMenu-item">
-					<a href="" class="MainMenu-link">Varios</a>
+					<a href="" class="MainMenu-link">Otro</a>
 				</li>
 			</ul>
 			<div class="Header-login">
@@ -44,7 +44,8 @@
 			</section>
 		</article>
 		<footer>
-			<p>Pie</p>
+			{% block pie %}
+			{% endblock %}
 		</footer>
 	</section>
 </body>

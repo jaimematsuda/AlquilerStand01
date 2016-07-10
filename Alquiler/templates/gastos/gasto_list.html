@@ -5,21 +5,20 @@
 {% endblock %}
 
 {% block contenido %}
-    <h1>
-        Lista de Gastos
-    </h1>
-    <p>
-        <a href="{% url "gastos:new" %}">Agregar Gasto</a>
-    </p>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>GRUPO</td>
-            <td>NOMBRE</td>
-            <td>TOTAL</td>
-            <td></td>
-            <td></td>
-        </tr>
+    {% include "form-button.html" with urldir="gastos:new" %}    
+    <table id="listaGasto" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>GRUPO</th>
+                <th>NOMBRE</th>
+                <th>TOTAL</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
         {% for lt in object_list %}
             <tr>
                 <td>{{ lt.id }}</td>
@@ -29,6 +28,12 @@
                 <td><a href="{% url "gastos:detail" lt.id %}">Ver</a></td>
                 <td><a href="{% url "gastos:edit" lt.id %}">Editar</a></td>
             </tr>
-        {% endfor %}       
+        {% endfor %}
+        </tbody>       
     </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>
 {% endblock %}

@@ -15,7 +15,7 @@ class BancoList(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(BancoList, self).get_context_data(**kwargs)
-		context.update({'titulo': 'Lista'})
+		context.update({'titulo': 'Lista de Transacciones'})
 		return context
 
 
