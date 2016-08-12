@@ -7,21 +7,17 @@
 {% block contenido %}
 	<form id="form_month_year" class="Canvas-main-form_month_year">
         <label>Lote :</label>
-        <select id="lote" name="lote">
-            <option value="01">1604-01</option>
-            <option value="02">1604-02</option>
-            <option value="03">1604-03</option>
-            <option value="04">1604-04</option>
-            <option value="05">1605-01</option>
-            <option value="06">1605-02</option>
-            <option value="07">1606-01</option>
-            <option value="08">1606-02</option>
-            <option value="09">1606-03</option>
-            <option value="10">1606-04</option>
-        </select>
-        <input type="button" id="submit" value="Filtrar" />
+        <input type="text" id="lote" list="lotelist" value="{{ ultimo_lote }}" />
+        <datalist id="lotelist" name="lotelist">
+        	{% for lo in lote_lista %}
+            	<option value="{{ lo.numero }}">{{ lo.numero }}</option>
+            {% endfor %}
+        </datalist>
+        <input type="button" id="submitfiltro" value="Filtrar" />
     </form>
     <button id="Canvas-main-button" class="Canvas-main-button" name="{% url "lotes:new_cobranza" %}">Agregar Cobranza</button>
+    <p>{{ rango_med }}</p>
+
 	<table id="listaCobranza" class="Table-lista">
 		<caption>Cobranzas</caption>
 		<thead>
@@ -40,7 +36,7 @@
     			<td>{{ lt.cobranza.contrato.local }}</td>
     			<td>{{ lt.cobranza.periodo }}</td>
     			<td>{{ lt.cobranza.fecha }}</td>
-    			<td>{{ lt.cobranza.monto }}</td>
+    			<td class="Table-lista-aligright">{{ lt.cobranza.monto }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
@@ -51,7 +47,7 @@
 				<th></th>
 				<th></th>
 				<th>Total</th>
-				<th></th>
+				<th class="Table-lista-aligright"></th>
 			</tr>
 		</tfoot>
 	</table>
@@ -80,7 +76,7 @@
                         {% if pm.pago.pk == lt.pago.id %}
                             <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
                             <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
-                            <td>{{ pm.monto }}</td>
+                            <td class="Table-lista-aligright">{{ pm.monto }}</td>
                         {% endif %}
                     {% endfor %}
                 {% else %}
@@ -88,7 +84,7 @@
                         {% if pg.pago.pk == lt.pago.id %}
                             <td>{{ pg.gasto.grupo }}</td>
                             <td>{{ pg.gasto.nombre }}</td>
-                            <td>{{ pg.monto }}</td>
+                            <td class="Table-lista-aligright">{{ pg.monto }}</td>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
@@ -102,17 +98,18 @@
 				<th></th>
 				<th></th>
 				<th>Total</th>
-				<th>{{ lote_pago.total }}</th>
+				<th class="Table-lista-aligright"></th>
 			</tr>
 		</tfoot>
 	</table>
 	<script type="text/javascript">
         $(function(){
             BotonAgregar();
-            SumarColumna('listaPago', 5);
-            PonerComaColumna('listaPago', 5);
             SumarColumna('listaCobranza', 5);
+            SumarColumna('listaPago', 5);
             PonerComaColumna('listaCobranza', 5);
+            PonerComaColumna('listaPago', 5);
+            EnviarLote('lote/transaccion');
         })
     </script>
 {% endblock %}

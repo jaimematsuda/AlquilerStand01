@@ -16,14 +16,12 @@
                 <th>GRUPO</th>
                 <th>NOMBRE</td>
                 <th>MONTO</th>
-                <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for lt in object_list %}    
             <tr>
-                <td>{{ lt.id }}</td>
+                <td><a href="{% url "pagos:edit" lt.id %}">{{ lt.id }}</a></td>
                 <td>{{ lt.fecha }}</td>
                 <td>{{ lt.tipo }}</td>
                 {% if lt.tipo.id = 1 %}
@@ -31,7 +29,7 @@
                         {% if pm.pago.pk == lt.id %}
                             <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
                             <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
-                            <td>{{ pm.monto }}</td>
+                            <td class="Table-lista-aligright">{{ pm.monto }}</td>
                         {% endif %}
                     {% endfor %}
                 {% else %}
@@ -39,12 +37,10 @@
                         {% if pg.pago.pk == lt.id %}
                             <td>{{ pg.gasto.grupo }}</td>
                             <td>{{ pg.gasto.nombre }}</td>
-                            <td>{{ pg.monto }}</td>
+                            <td class="Table-lista-aligright">{{ pg.monto }}</td>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-                <td><a href="{% url "pagos:detail" lt.id %}">Ver</a></td>
-                <td><a href="{% url "pagos:edit" lt.id %}">Editar</a></td>
             </tr>   
         {% endfor %}
         </tbody>
@@ -55,15 +51,13 @@
                 <th></th>
                 <th></th>
                 <th>TOTAL</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th class="Table-lista-aligright"></th>
             </tr>
         </tfoot>
     </table>
     <script type="text/javascript">
         $(function(){
-            EnviarMesAnio();
+            EnviarMesAnio('pago');
             SumarColumna('listaPago', 5);
             PonerComaColumna('listaPago', 5);
             BotonAgregar();

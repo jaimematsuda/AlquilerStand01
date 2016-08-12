@@ -22,11 +22,11 @@ body
 			background-color #EEEEEE		
 	tfoot tr
 		background-color: #E1E1E1		
-	td, th 
+	td, th
 		padding 0.4em 1.5em 0.4em 0.5em
-		&:nth-child(6)
-			text-align right
-			padding	0.4em 0.5em 0.4em 1.5em
+	&-aligright
+		text-align right
+		padding	0.4em 0.5em 0.4em 1.5em		
 					
 .Canvas
 	overflow hidden
@@ -43,7 +43,7 @@ body
 			display table
 			text-align right
 			width 100%
-			color blue
+			color #026aa7
 			input
 				width 60px
 		&-button
@@ -53,9 +53,23 @@ body
 			color white
 			border-radius 10px
 			border none
+			&-grabar
+				padding 0.4em
+				margin-left 1em
+				background red
+				color white
+				border-radius 10px
+				border none
+			&-regresar
+				padding 0.4em
+				margin-left 1em
+				background green
+				color white
+				border-radius 10px
+				border none
 
 .Header
-	background blue
+	background #026aa7
 	padding 10px
 	position relative
 	height 30px
@@ -90,7 +104,7 @@ body
 	left -200px
 	top 0
 	transition 1s
-	background blue
+	background #026aa7
 	&.is-active
 		left 0
 	&-item

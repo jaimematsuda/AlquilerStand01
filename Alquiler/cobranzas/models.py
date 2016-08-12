@@ -17,7 +17,7 @@ class CobranzaTipo(models.Model):
 
 
 class Cobranza(models.Model):
-	tipo = models.ForeignKey(CobranzaTipo, blank=True, null=True) ## ALQUILER, MANTENIMIENTO
+	tipo = models.ForeignKey(CobranzaTipo) ## ALQUILER, MANTENIMIENTO
 	contrato = models.ForeignKey(Contrato)
 	periodo = models.CharField(max_length=255)
 	fecha = models.DateField()

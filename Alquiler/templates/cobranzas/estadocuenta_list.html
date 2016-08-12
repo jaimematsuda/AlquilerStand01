@@ -5,46 +5,61 @@
 {% endblock %}
 
 {% block contenido %}
-	<h1>Estado de Cuentas</h1>
-	<form method="post">
-    	{% csrf_token %}
-    	<label>Año :</label>
-    	<input type="text" name="anio" />
-    	<label>Mes :</label>
-    	<input type="text" name="mes" />
-    	<input type="submit" value="Enviar" />
+	<form id="form_month_year" class="Canvas-main-form_month_year">
+	    <label>Mes :</label>
+	    <select id="month" name="month">
+	        <option value="01" >Enero</option>
+	        <option value="02">Febrero</option>
+	        <option value="03">Marzo</option>
+	        <option value="04">Abril</option>
+	        <option value="05">Mayo</option>
+	        <option value="06">Junio</option>
+	        <option value="07">Julio</option>
+	        <option value="08">Agosto</option>
+	        <option value="09">Setiembre</option>
+	        <option value="10">Octubre</option>
+	        <option value="11">Noviembre</option>
+	        <option value="12">Diciembre</option>
+	    </select>
+	    <label>Año :</label>
+	    <input type="text" id="year" name="year" value={{ year }} />
+	    <input type="button" id="submit" value="Filtrar" />
 	</form>
-	<h1>
-		Mes de Abril
-	</h1>
-	<table>
-		<tr>
-			<td>PISO</td>
-			<td>LOCAL</td>
-			<td>PERIODO</td>
-			<td>M. ALQUILER</td>
-			<td>MONTO</td>
-			<td>ESTADO MES</td>
-			<td>COLORES</td>
-		</tr>
+	<table id="listaEstadoCuenta" class="Table-lista">
+		<caption>{{ titulo }}</caption>
+		<thead>
+			<tr>
+				<th>PISO</th>
+				<th>CONTRATO LOCAL</th>
+				<th>PERIODO</th>
+				<th>M. ALQUILER</th>
+				<th>COBRADO</th>
+				<th>ESTADO</th>
+			</tr>
+		</thead>
+		<tbody>
 		{% for cr in contrato %}
 			<tr>
-	  				<td>{{ cr.local.piso }}</td>
-	    			<td>{{ cr.id }}</td>
-	    			<td>nuevo</td>
-	    			<td>{{ cr.monto }}</td>
-	    			<td></td>
-					<td>Nuevo</td>
-	    			<td>color</td>
+  				<td>{{ cr.local.piso }}</td>
+    			<td>{{ cr.local.numero }}</td>
+    			<td>nuevo</td>
+    			<td class="Table-lista-aligright">{{ cr.monto }}</td>
+    			<td></td>
+				<td>Nuevo</td>
 			</tr>
 		{% endfor %}
   		{% for pr in object_list %}
   			<tr>
   				<td>{{ pr.contrato__local__piso }}</td>
-    			<td>{{ pr.contrato__pk }}</td>
+    			<td>
+                    {{ pr.contrato }}  
+                    {{ pr.contrato__local__tipo__nombre }}  
+                    {{ pr.contrato__local__numero }}, 
+                    {{ pr.contrato__local__division__nombre }}   			
+    			</td>
     			<td>{{ pr.periodo }}</td>
-    			<td>{{ pr.contrato__monto }}</td>
-    			<td>{{ pr.monto_cobrado }}</td>
+    			<td class="Table-lista-aligright">{{ pr.contrato__monto }}</td>
+    			<td class="Table-lista-aligright">{{ pr.monto_cobrado }}</td>
     			{% if pr.contrato__monto == pr.monto_cobrado %}
 					<td>Cancelado</td>
 				{% elif pr.contrato__monto > pr.monto_cobrado %}
@@ -52,9 +67,19 @@
 				{% else %}
 					<td>Revisar</td>
 				{% endif %}
-    			<td>color</td>
   			</tr>
-  		{% endfor %}		
+  		{% endfor %}
+  		</tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</th>
+                <th class="Table-lista-aligright"></th>
+                <th></th>
+            </tr>
+        </tfoot>		
 	</table>
 	<p> 
 		los locales con contratos nuevos van a aparecer como nuevo mientras no 
@@ -62,4 +87,14 @@
 		cobrador debe ingresar los datos online para que este reporte este 
 		actualizado en tiempo real. Y los nuevos aparecen arriba
 	</p>
+	<script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+            EnviarMesAnio("cobranza/estadocuenta");
+            MesPredeterminado("{{ month }}");
+            SumarColumna('listaEstadoCuenta', 4);
+            PonerComaColumna('listaEstadoCuenta', 4); 
+            PonerComaColumna('listaEstadoCuenta', 3);                                 
+        })
+    </script> 	
 {% endblock %}

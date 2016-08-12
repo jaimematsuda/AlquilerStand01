@@ -97,10 +97,16 @@ class LoteCobranzaUpdate(UpdateView):
 
 
 class LoteTransaccionContratoList(ListView):
-	model = Lote
+	#model = Lote
 	context_object_name = 'ultimo_lote'  
 	template_name = 'lotes/lotetransaccioncontrato_list.html'
-	queryset = Lote.objects.order_by('id').last()
+	#queryset = Lote.objects.order_by('id').last()
+
+	def get_queryset(self):
+		if self.args == ():
+			return Lote.objects.order_by('id').last()
+		else:
+			return Lote.objects.get(numero=(self.args[0] + "-" + self.args[1]))
 
 	def get_context_data(self, **kwargs):
 		context = super(LoteTransaccionContratoList, self).get_context_data(
@@ -114,6 +120,11 @@ class LoteTransaccionContratoList(ListView):
 			lote=context['ultimo_lote'])
 		pago_mantenimiento = PagoMantenimiento.objects.all()
 		pago_gasto = PagoGasto.objects.all()
+		rango_med = context['ultimo_lote']
+		rango_inicio = rango_med.id - 20
+		ultimo = Lote.objects.order_by('id').last()
+		rango_final = ultimo.id
+		lote_lista = Lote.objects.filter(id__range=[rango_inicio, rango_final])
 
 		context.update({'titulo': 'Transacciones'})
 		context.update({'lote_cobranza': lote_cobranza})
@@ -121,6 +132,7 @@ class LoteTransaccionContratoList(ListView):
 		context.update({'lote_pago': lote_pago})
 		context.update({'pago_mantenimiento': pago_mantenimiento})
 		context.update({'pago_gasto': pago_gasto})
+		context.update({'lote_lista': lote_lista})
 		return context
 
 class LoteNuevaCobranzaCreation(CreateView):

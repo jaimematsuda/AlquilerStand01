@@ -9,9 +9,7 @@
 	<form method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
-		<input type="submit" value="Enviar" />
+	    <input type="submit" class="Canvas-main-button-grabar" value="Guardar" />
+		<input type="button" class="Canvas-main-button-regresar" onclick="goBack()" value="Regresar" />
 	</form>
-	<p>
-		<a href="{% url "inquilinos:list" %}">Regresar</a>
-	</p>
 {% endblock %}

@@ -1,3 +1,4 @@
+import datetime
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Sum
 from itertools import chain
@@ -16,11 +17,31 @@ from .models import Contrato
 
 
 class CobranzaList(ListView):
-	model = Cobranza
+	def get_queryset(self):
+		# El reverse_lazy de PagoCreation no acepta enviar parametros al get
+		# Si no envia tomar el mes y anio actual para filtra la base
+		if self.args == ():
+			d = datetime.date.today()
+			month = '{:02d}'.format(d.month)
+			year = '{:04d}'.format(d.year)
+			return Cobranza.objects.filter(fecha__year=year, fecha__month=month)
+		else:
+			month = self.args[0]
+			year = self.args[1]
+			return Cobranza.objects.filter(fecha__year=year, fecha__month=month)	
 
 	def get_context_data(self, **kwargs):
 		context = super(CobranzaList, self).get_context_data(**kwargs)
+		if self.args == ():
+			d = datetime.date.today()
+			month = '{:02d}'.format(d.month)
+			year = '{:04d}'.format(d.year)
+		else:
+			month = self.args[0]
+			year = self.args[1]	
 		context.update({'titulo': 'Lista de Cobranza'})
+		context.update({'month': month})
+		context.update({'year': year})	
 		return context
 
 
@@ -56,17 +77,50 @@ class CobranzaUpdate(UpdateView):
 
 
 class EstadoCuentaList(ListView):
-	model = Cobranza  
 	template_name = 'cobranzas/estadocuenta_list.html'
-	queryset = Cobranza.objects.values('contrato__local__piso', 
-									   'contrato__local',
+
+	def get_queryset(self):
+		if self.args == ():
+			d = datetime.date.today()
+			month = '{:02d}'.format(d.month)
+			year = '{:04d}'.format(d.year)
+			periodo = '%s-%s' % (month, year)
+			return Cobranza.objects.values('contrato__local__piso', 
+									   'contrato',
+									   'contrato__local__tipo__nombre',
+									   'contrato__local__numero',
+									   'contrato__local__division__nombre',
 								       'periodo', 'contrato__monto', 
 								       'contrato__pk'
-								      ).filter(periodo='04-2016'
+								      ).filter(periodo=periodo
+								      ).annotate(monto_cobrado=Sum('monto'))
+		else:
+			month = self.args[0]
+			year = self.args[1]
+			periodo = '%s-%s' % (month, year)
+			return Cobranza.objects.values('contrato__local__piso', 
+									   'contrato',
+									   'contrato__local__tipo__nombre',
+									   'contrato__local__numero',
+									   'contrato__local__division__nombre',
+								       'periodo', 'contrato__monto', 
+								       'contrato__pk'
+								      ).filter(periodo=periodo
 								      ).annotate(monto_cobrado=Sum('monto'))
 
 	def get_context_data(self, **kwargs):
 		context = super(EstadoCuentaList, self).get_context_data(**kwargs)
+		if self.args == ():
+			d = datetime.date.today()
+			month = '{:02d}'.format(d.month)
+			year = '{:04d}'.format(d.year)
+			periodo = '%s-%s' % (month, year)
+			argumento = self.args
+		else:
+			month = self.args[0]
+			year = self.args[1]
+			periodo = '%s-%s' % (month, year)
+			argumento = self.args
 		contrato_id = Contrato.objects.values_list('pk')
 		cobranza_id = Cobranza.objects.values_list('contrato').filter()
 		diferencia = list(set(contrato_id) - set(cobranza_id))
@@ -79,4 +133,6 @@ class EstadoCuentaList(ListView):
 		context.update({'contrato': contrato})
 		context.update({'diferencia': diferencia})
 		context.update({'lista_id': lista_id})
+		context.update({'month': month})
+		context.update({'year': year})
 		return context
