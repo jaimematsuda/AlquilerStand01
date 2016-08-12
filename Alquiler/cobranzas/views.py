@@ -105,7 +105,7 @@ class EstadoCuentaList(ListView):
 									   'contrato__local__division__nombre',
 								       'periodo', 'contrato__monto', 
 								       'contrato__pk'
-								      ).filter(periodo=periodo
+								      ).filter(periodo=periodo, tipo=1
 								      ).annotate(monto_cobrado=Sum('monto'))
 
 	def get_context_data(self, **kwargs):

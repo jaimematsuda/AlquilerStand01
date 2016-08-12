@@ -62,14 +62,20 @@ function CambiarAlineamientoRight(grilla, columna){
 }
 
 function CambiarColorCelda(grilla, columna){
-    var resultVal = 0.0; 
     $("#" + grilla + " tbody tr").each(
         function(){
-            var celdaValor = $(this).find('td:eq(' + columna + ')');
-            if (celdaValor.val() != null)
-                var valor = parseFloat(celdaValor.html());
-                $(this).find('td:eq(' + columna + ')').html(valor.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));  
+            var celdaValor = $(this).find('td:eq(' + columna + ')').html();
+            switch (celdaValor){
+                case "Cancelado":
+                    $(this).find('td:eq(' + columna + ')').css("background-color", "green");
+                    break;
+                case "A Cuenta":
+                    $(this).find('td:eq(' + columna + ')').css("background-color", "yellow");
+                    break;
+                case "Revisar":
+                    $(this).find('td:eq(' + columna + ')').css("background-color", "red");
+                    break;
+            }
         } //function    
-    ) //each
-    $("#" + grilla + "(" + columna + ")").css("text-align", "right");
+    ) //each (celdaValor.val() != null)
 }
