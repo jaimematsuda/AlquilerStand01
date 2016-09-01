@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>{{ Transaccion <i>{{ caja.id }}</i> }}</h1>
+	<p>Fecha: <i>{{ caja.fecha }}</i></p>
+	<p>
+	    <a href="{% url "cajas:list" %}">Regresar</a>
+	</p>
+{% endblock %}

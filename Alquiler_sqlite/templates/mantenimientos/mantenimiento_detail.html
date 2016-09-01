@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Mantenimiento <i>{{ mantenimiento.id }}</i></h1>
+	<p>Grupo: <i>{{ mantenimiento.grupo }}</i></p>
+	<p>Nombre: <i>{{ mantenimiento.nombre }}</i></p>
+	<p>Periodo: <i>{{ mantenimiento.periodo }}</i></p>
+	<p>Total: <i>{{ mantenimiento.total }}</i></p>
+	<p>
+	    <a href="{% url "mantenimientos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

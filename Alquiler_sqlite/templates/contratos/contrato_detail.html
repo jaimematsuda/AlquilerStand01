@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Detalle del Contrato</h1>
+	<h1>{{ contrato.id }}, {{ contrato.local }}, {{ contrato.inquilino }}</h1>
+	<p>Inicio Contrato: <i>{{ contrato.inicio }}</i></p>
+	<p>Vencimiento Contrato: <i>{{ contrato.vencimiento }}</i></p>
+	<p>Moneda: <i>{{ contrato.moneda }}</i></p>
+	<p>Monto: <i>{{ contrato.monto }}</i></p>
+	<p>Vigencia: <i>{{ contrato.vigencia.nombre }}</i></p>
+	<p>Cobro: <i>{{ contrato.cobro.nombre }}</i></p>
+	<p>
+		<a href="{% url "contratos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

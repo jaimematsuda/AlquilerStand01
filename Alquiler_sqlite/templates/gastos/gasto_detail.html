@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Gasto <i>{{ gasto.id }}</i></h1>
+	<p>Grupo: <i>{{ gasto.grupo }}</i></p>
+	<p>Nombre: <i>{{ gasto.nombre }}</i></p>
+	<p>Total: <i>{{ gasto.total }}</i></p>
+	<p>
+	    <a href="{% url "gastos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

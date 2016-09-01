@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>{{ cobranza.contrato }}</h1>
+	<p>Periodo: <i>{{ cobranza.periodo }}</i></p>
+	<p>Fecha de Cobranza: <i>{{ cobranza.fecha }}</i></p>
+	<p>
+	    <a href="{% url "cobranzas:list" %}">Regresar</a>
+	</p>
+{% endblock %}

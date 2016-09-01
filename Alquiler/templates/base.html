@@ -7,16 +7,16 @@
 	<meta name="viewport" content="width=device-width, user-scalabel=no">
 	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 	<script type="text/javascript" src="{% static 'js/base.js' %}"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 </head>
 <body>
 	<section class="Canvas">
 		<header class="Header is-active">
 			<h1 class="Header-logo">
-				<a href="">Proyecto Alquiler de Stand</a>
+				<a href="">Alquiler de Stand</a>
 			</h1>
 			<button class="Header-button">Menú</button>
 			<ul class="MainMenu">
@@ -31,6 +31,12 @@
 				</li>
 				<li class="MainMenu-item">
 					<a href="{% url "pagos:list" %}" class="MainMenu-link">Pago</a>
+				</li>
+				<li class="MainMenu-item">
+					<a href="{% url "contratos:list" %}" class="MainMenu-link">Contrato</a>
+				</li>
+				<li class="MainMenu-item">
+					<a href="{% url "inquilinos:list" %}" class="MainMenu-link">Inquilino</a>
 				</li>
 			</ul>
 			<div class="Header-login">

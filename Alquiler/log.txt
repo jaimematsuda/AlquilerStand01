@@ -1,0 +1,60 @@
+rrt4kus@Satellite-L755:~/Proyectos/Alquiler_local/Alquiler$ git push heroku master
+Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 541 bytes | 0 bytes/s, done.
+Total 5 (delta 3), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote: 
+remote: -----> Python app detected
+remote:  !     Warning: Your application is missing a Procfile. This file tells Heroku how to run your application.
+remote:  !     Learn more: https://devcenter.heroku.com/articles/procfile
+remote:      $ pip install -r requirements.txt
+remote:        Collecting dj-database-url==0.4.1 (from -r requirements.txt (line 1))
+remote:          Downloading dj-database-url-0.4.1.tar.gz
+remote:        Installing collected packages: dj-database-url
+remote:          Running setup.py install for dj-database-url: started
+remote:            Running setup.py install for dj-database-url: finished with status 'done'
+remote:        Successfully installed dj-database-url-0.4.1
+remote: 
+remote:      $ python manage.py collectstatic --noinput
+remote:        Traceback (most recent call last):
+remote:          File "manage.py", line 10, in <module>
+remote:            execute_from_command_line(sys.argv)
+remote:          File "/app/.heroku/python/lib/python2.7/site-packages/django/core/management/__init__.py", line 353, in execute_from_command_line
+remote:            utility.execute()
+remote:          File "/app/.heroku/python/lib/python2.7/site-packages/django/core/management/__init__.py", line 302, in execute
+remote:            settings.INSTALLED_APPS
+remote:          File "/app/.heroku/python/lib/python2.7/site-packages/django/conf/__init__.py", line 55, in __getattr__
+remote:            self._setup(name)
+remote:          File "/app/.heroku/python/lib/python2.7/site-packages/django/conf/__init__.py", line 43, in _setup
+remote:            self._wrapped = Settings(settings_module)
+remote:          File "/app/.heroku/python/lib/python2.7/site-packages/django/conf/__init__.py", line 99, in __init__
+remote:            mod = importlib.import_module(self.SETTINGS_MODULE)
+remote:          File "/app/.heroku/python/lib/python2.7/importlib/__init__.py", line 37, in import_module
+remote:            __import__(name)
+remote:          File "/app/Alquiler/settings.py", line 92, in <module>
+remote:            DATABASES['default'] =  dj_database_url.config()
+remote:        NameError: name 'DATABASES' is not defined
+remote: 
+remote:  !     Error while running '$ python manage.py collectstatic --noinput'.
+remote:        See traceback above for details.
+remote: 
+remote:        You may need to update application code to resolve this error.
+remote:        Or, you can disable collectstatic for this application:
+remote: 
+remote:           $ heroku config:set DISABLE_COLLECTSTATIC=1
+remote: 
+remote:        https://devcenter.heroku.com/articles/django-assets
+remote:  !     Push rejected, failed to compile Python app.
+remote: 
+remote:  !     Push failed
+remote: Verifying deploy...
+remote: 
+remote: !   Push rejected to alquilerstand.
+remote: 
+To https://git.heroku.com/alquilerstand.git
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'https://git.heroku.com/alquilerstand.git'
+

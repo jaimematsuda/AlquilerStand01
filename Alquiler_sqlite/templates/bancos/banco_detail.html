@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Transaccion: <i>{{ banco.id }}</i></h1>
+	<p>Fecha: <i>{{ banco.fecha }}</i></p>
+	<p>
+	    <a href="{% url "bancos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

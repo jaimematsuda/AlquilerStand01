@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+    {% include "form-button.html" with urldir="lotes:new_lotecobranza" %}
+    <table id="listaLotecobranza" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>COBRANZA</th>
+                <th>LOTE</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lt in object_list %}
+            <tr>
+                <td>{{ lt.pk }}</td>
+                <td>{{ lt.cobranza.pk }}</td>
+                <td>{{ lt.lote.pk }}</td>
+                <td><a href="{% url "lotes:edit_lotecobranza" lt.pk %}">Editar</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>     
+    </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>    
+{% endblock %}

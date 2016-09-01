@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+    {% include "form-button.html" with urldir="pagos:new" %}
+    <table id="listaPago" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>TIPO</th>
+                <th>GRUPO</th>
+                <th>NOMBRE</td>
+                <th>MONTO</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lt in object_list %}    
+            <tr>
+                <td><a href="{% url "pagos:edit" lt.id %}">{{ lt.id }}</a></td>
+                <td>{{ lt.fecha }}</td>
+                <td>{{ lt.tipo }}</td>
+                {% if lt.tipo.id = 1 %}
+                    {% for pm in pago_mantenimiento %}
+                        {% if pm.pago.pk == lt.id %}
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.grupo }}</td>
+                            <td>{{ pm.mantenimiento_periodo.mantenimiento.nombre }}</td>
+                            <td class="Table-lista-aligright">{{ pm.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for pg in pago_gasto %}
+                        {% if pg.pago.pk == lt.id %}
+                            <td>{{ pg.gasto.grupo }}</td>
+                            <td>{{ pg.gasto.nombre }}</td>
+                            <td class="Table-lista-aligright">{{ pg.monto }}</td>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </tr>   
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</th>
+                <th class="Table-lista-aligright"></th>
+            </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript">
+        $(function(){
+            EnviarMesAnio('pago');
+            SumarColumna('listaPago', 5);
+            PonerComaColumna('listaPago', 5);
+            BotonAgregar();
+            MesPredeterminado("{{ month }}");
+        })
+    </script>
+{% endblock %}

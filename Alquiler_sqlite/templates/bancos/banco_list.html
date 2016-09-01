@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+    {% include "form-button.html" with urldir="bancos:new" %}
+    <table id="listaBanco" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lt in object_list %}
+            <tr>
+                <td>{{ lt.id }}</td>
+                <td>{{ lt.fecha }}</td>
+                <td><a href="{% url "bancos:detail" lt.id %}">Ver</a></td>
+                <td><a href="{% url "bancos:edit" lt.id %}">Editar</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>      
+    </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>    
+{% endblock %}

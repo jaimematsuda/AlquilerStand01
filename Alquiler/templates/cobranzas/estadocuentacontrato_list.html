@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<form id="form_month_year" class="Canvas-main-form_month_year">
+	    <label>Mes :</label>
+	    <select id="month" name="month">
+	        <option value="01" >Enero</option>
+	        <option value="02">Febrero</option>
+	        <option value="03">Marzo</option>
+	        <option value="04">Abril</option>
+	        <option value="05">Mayo</option>
+	        <option value="06">Junio</option>
+	        <option value="07">Julio</option>
+	        <option value="08">Agosto</option>
+	        <option value="09">Setiembre</option>
+	        <option value="10">Octubre</option>
+	        <option value="11">Noviembre</option>
+	        <option value="12">Diciembre</option>
+	    </select>
+	    <label>Año :</label>
+	    <input type="text" id="year" name="year" value={{ year }} />
+	    <input type="button" id="submit" value="Filtrar" />
+	</form>
+	<table id="listaEstadoCuenta" class="Table-lista">
+		<caption>{{ titulo }}</caption>
+		<thead>
+			<tr>
+				<th>CONTRATO</th>
+				<th>PERIODO</th>
+				<th>LOTE</th>
+				<th>FECHA</th>
+				<th>COBRADO</th>
+			</tr>
+		</thead>
+		<tbody>
+  		{% for pr in object_list %}
+  			<tr>
+  				<td>{{ pr.contrato }}</td>
+    			<td>{{ pr.periodo }}</td>
+    			<td>{{ pr.lotecobranza.lote}}</td>
+    			<td>{{ pr.fecha }}</td>
+    			<td class="Table-lista-aligright">{{ pr.monto }}</td>
+  			</tr>
+  		{% endfor %}
+  		</tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</th>
+                <th class="Table-lista-aligright"></th>
+            </tr>
+        </tfoot>		
+	</table>
+	<script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+            EnviarMesAnio("cobranza/estadocuenta");
+            MesPredeterminado("{{ month }}");
+            SumarColumna('listaEstadoCuenta', 4);
+            PonerComaColumna('listaEstadoCuenta', 4);                               
+        })
+    </script> 	
+{% endblock %}

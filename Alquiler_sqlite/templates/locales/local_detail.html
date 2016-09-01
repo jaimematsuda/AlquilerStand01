@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Detalle del local</h1>
+	<p>Piso: <i>{{ local.piso }}</i></p>
+	<p>Local Tipo: <i>{{ local.tipo }}</i></p>
+	<p>Local Numero: <i>{{ local.numero}}, {{ local.division }}</i></p>
+	<p>
+		<a href="{% url "locales:list" %}">Regresar</a>
+	</p>
+{% endblock %}

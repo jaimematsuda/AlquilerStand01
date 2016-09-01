@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<form action="" method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    {{ lotecobranza_form.as_p }}
+	    <input type="submit" class="Canvas-main-button-grabar" value="Guardar" />
+		<input type="button" class="Canvas-main-button-regresar" onclick="goBack()" value="Regresar" />
+	</form>
+{% endblock %}

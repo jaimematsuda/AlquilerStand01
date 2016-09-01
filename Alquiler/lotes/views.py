@@ -106,7 +106,8 @@ class LoteTransaccionContratoList(ListView):
 		if self.args == ():
 			return Lote.objects.order_by('id').last()
 		else:
-			return Lote.objects.get(numero=(self.args[0] + "-" + self.args[1]))
+			num = '%s-%s' % (self.args[0], self.args[1])
+			return Lote.objects.get(numero=num)
 
 	def get_context_data(self, **kwargs):
 		context = super(LoteTransaccionContratoList, self).get_context_data(

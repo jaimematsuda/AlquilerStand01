@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<h1>Pago numero: <i>{{ pago.id }}</i></h1>
+	<p>Fecha: <i>{{ pago.fecha }}</i></p>
+	<p>
+	    <a href="{% url "pagos:list" %}">Regresar</a>
+	</p>
+{% endblock %}

@@ -41,10 +41,17 @@
 		{% for cr in contrato %}
 			<tr>
   				<td>{{ cr.local.piso }}</td>
-    			<td>{{ cr.local.numero }}</td>
+    			<td>
+    				<a href="{% url "cobranzas:cuentacontrato" %}">
+    					{{ cr.id }}
+    					{{ cr.local.tipo.nombre }}
+    					{{ cr.local.numero }},
+    					{{ cr.local.division.nombre }}
+    				</a>
+    			</td>
     			<td>nuevo</td>
     			<td class="Table-lista-aligright">{{ cr.monto }}</td>
-    			<td></td>
+    			<td class="Table-lista-aligright">0.00</td>
 				<td>Nuevo</td>
 			</tr>
 		{% endfor %}
@@ -52,10 +59,12 @@
   			<tr>
   				<td>{{ pr.contrato__local__piso }}</td>
     			<td>
-                    {{ pr.contrato }}  
-                    {{ pr.contrato__local__tipo__nombre }}  
-                    {{ pr.contrato__local__numero }}, 
-                    {{ pr.contrato__local__division__nombre }}   			
+    				<a href="{% url "cobranzas:cuentacontrato" %}">
+                    	{{ pr.contrato }}  
+                    	{{ pr.contrato__local__tipo__nombre }}  
+                    	{{ pr.contrato__local__numero }}, 
+                    	{{ pr.contrato__local__division__nombre }} 
+                    </a>  			
     			</td>
     			<td>{{ pr.periodo }}</td>
     			<td class="Table-lista-aligright">{{ pr.contrato__monto }}</td>

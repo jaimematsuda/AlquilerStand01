@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	<form method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    {{ mantenimientoperiodo_form.as_p}}
+	    {{ pagomantenimiento_form.as_p}}
+	    {{ pagogasto_form.as_p}}
+	    <input type="submit" class="Canvas-main-button-grabar" value="Guardar" />
+		<input type="button" class="Canvas-main-button-regresar" onclick="goBack()" value="Regresar" />
+	</form>
+	<script type="text/javascript">
+        $(function(){
+        	$("#datepicker").datepicker({dateFormat: 'dd/mm/yy'});
+            EnviarMesAnio();
+            SumarColumna('listaPago', 5);
+            PonerComaColumna('listaPago', 5);
+            MesPredeterminado("{{ month }}")
+        })
+    </script>
+{% endblock %}

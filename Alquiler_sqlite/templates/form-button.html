@@ -1,0 +1,21 @@
+<form id="form_month_year" class="Canvas-main-form_month_year">
+    <label>Mes :</label>
+    <select id="month" name="month">
+        <option value="01" >Enero</option>
+        <option value="02">Febrero</option>
+        <option value="03">Marzo</option>
+        <option value="04">Abril</option>
+        <option value="05">Mayo</option>
+        <option value="06">Junio</option>
+        <option value="07">Julio</option>
+        <option value="08">Agosto</option>
+        <option value="09">Setiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+    </select>
+    <label>Año :</label>
+    <input type="text" id="year" name="year" value={{ year }} />
+    <input type="button" id="submit" value="Filtrar" />
+</form>
+<button id="Canvas-main-button-1" class="Canvas-main-button" name="{% url urldir %}">Agregar {{ botontitulo }}</button>

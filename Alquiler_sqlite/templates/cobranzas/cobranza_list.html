@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+    {% include "form-button.html" with urldir="cobranzas:new" botontitulo="Cobranza" %}    
+    <table id="listaCobranza" class="Table-lista">
+        <caption>{{ titulo }}</caption>
+        <thead>
+            <tr>
+                <th>TIPO</th>
+                <th>CONTRATO</th>
+                <th>LOCAL</th>
+                <th>PERIODO</th>
+                <th>FECHA DE COBRANZA</th>
+                <th>MONTO</th>
+                <th>LOTE</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pr in object_list %}
+            <tr>
+                <td>{{ pr.tipo }}</td>
+                <td><a href="{% url "cobranzas:edit" pr.id %}">{{ pr.contrato.id }}</a></td>
+                <td>
+                    {{ pr.contrato.local.tipo.nombre }}  
+                    {{ pr.contrato.local.numero }}, 
+                    {{ pr.contrato.local.division.nombre }}
+                </td>
+                <td>{{ pr.periodo }}</td>
+                <td>{{ pr.fecha }}</td>
+                <td class="Table-lista-aligright">{{ pr.monto }}</td>
+                <td>{{ pr.lote }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>TOTAL</th>
+                <th class="Table-lista-aligright"></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+            EnviarMesAnio('cobranza');
+            MesPredeterminado("{{ month }}");
+            SumarColumna('listaCobranza', 5);
+            PonerComaColumna('listaCobranza', 5);
+        })
+    </script>  
+{% endblock %}

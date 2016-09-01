@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ titulo }}
+{% endblock %}
+
+{% block contenido %}
+	{% include "form-button.html" with urldir="locales:new" %}
+	<table id="listaLocal" class="Table-lista">
+		<thead>
+			<tr>
+				<th>PISO</th>
+				<th>TIPO</th>
+				<th>NUMERO</th>
+				<th>DIVISION</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for local in object_list %}
+			<tr>
+				<td>{{ local.piso }}</td>
+				<td>{{ local.tipo }}</td>
+				<td>{{ local.numero }}</td>
+				<td>{{ local.division }}</td>
+				<td><a href="{% url "locales:detail" local.id %}">Ver</a></td>
+				<td><a href="{% url "locales:edit" local.id %}">Editar</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+    <script type="text/javascript">
+        $(function(){
+            BotonAgregar();
+        })
+    </script>	
+{% endblock %}
+
+
